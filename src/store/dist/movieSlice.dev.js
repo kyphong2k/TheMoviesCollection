@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.sortMovieList = exports.setSearchKey = exports.setMovieBannerList = exports.getSuccess = exports.getError = exports.getStart = exports["default"] = void 0;
+exports.setTotalPage = exports.LoadPageByNumber = exports.sortMovieList = exports.setSearchKey = exports.setMovieBannerList = exports.getSuccess = exports.getError = exports.getStart = exports["default"] = void 0;
 
 var _toolkit = require("@reduxjs/toolkit");
 
@@ -23,7 +23,9 @@ var movieSlice = (0, _toolkit.createSlice)({
     status: false,
     movieList: [],
     movieBannerList: [],
-    searchKey: ''
+    searchKey: '',
+    pageNumber: 1,
+    totalPage: 0
   },
   reducers: {
     getStart: function getStart(state) {
@@ -46,6 +48,12 @@ var movieSlice = (0, _toolkit.createSlice)({
     setSearchKey: function setSearchKey(state, action) {
       state.searchKey = action.payload;
     },
+    LoadPageByNumber: function LoadPageByNumber(state, action) {
+      state.pageNumber = action.payload;
+    },
+    setTotalPage: function setTotalPage(state, action) {
+      state.totalPage = action.payload;
+    },
     sortMovieList: function sortMovieList(state, action) {
       state.movieList = action.payload;
     }
@@ -59,7 +67,11 @@ var _movieSlice$actions = movieSlice.actions,
     getSuccess = _movieSlice$actions.getSuccess,
     setMovieBannerList = _movieSlice$actions.setMovieBannerList,
     setSearchKey = _movieSlice$actions.setSearchKey,
-    sortMovieList = _movieSlice$actions.sortMovieList;
+    sortMovieList = _movieSlice$actions.sortMovieList,
+    LoadPageByNumber = _movieSlice$actions.LoadPageByNumber,
+    setTotalPage = _movieSlice$actions.setTotalPage;
+exports.setTotalPage = setTotalPage;
+exports.LoadPageByNumber = LoadPageByNumber;
 exports.sortMovieList = sortMovieList;
 exports.setSearchKey = setSearchKey;
 exports.setMovieBannerList = setMovieBannerList;

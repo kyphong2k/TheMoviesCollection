@@ -2,14 +2,14 @@ import React, {  useState } from 'react'
 import {FilterIcon, ChevronDownIcon, SearchIcon} from '@heroicons/react/solid'
 import { useDispatch, useSelector} from 'react-redux';
 import {setSearchKey,sortMovieList} from '../../store/movieSlice'
-const FilterAndSearch = ({setFilterType}) => {
+const FilterAndSearch = ({setFilterType, setPageNum, setTitleFilter}) => {
   const [searchKeyString, setSearchKeyString] = useState('');
   const dispatch = useDispatch()
   const movieList = useSelector(state => state.movieData.movieList);
   
   const handleSubmit = (e) => {
     e.preventDefault()
-    
+    setPageNum(1)
     dispatch(setSearchKey(searchKeyString))
   }
   const handleFilter = (filterType) => {
@@ -20,16 +20,21 @@ const FilterAndSearch = ({setFilterType}) => {
           return b.popularity - a.popularity
           // reverse array desc
         })
+        
         dispatch(sortMovieList(dataAfterSort))
+
         break;
       }
       case ('vote_average.desc'): {
+
         const dataAfterSort = [...movieList].sort((a,b) => {
           return b.vote_average - a.vote_average
           // reverse array desc
         })
 
+        
         dispatch(sortMovieList(dataAfterSort))
+
         break;
       }
       case ('release_date.desc'): {
@@ -40,7 +45,9 @@ const FilterAndSearch = ({setFilterType}) => {
           // reverse array desc
         })
 
+        
         dispatch(sortMovieList(dataAfterSort))
+
         break;
       }
       default: {

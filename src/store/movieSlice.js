@@ -8,7 +8,9 @@ const movieSlice = createSlice({
         status: false,
         movieList: [],
         movieBannerList: [],
-        searchKey: ''
+        searchKey: '',
+        pageNumber: 1,
+        totalPage: 0
     },
     reducers: {
         getStart: (state) => {
@@ -32,6 +34,12 @@ const movieSlice = createSlice({
         setSearchKey: (state,action) => {
             state.searchKey = action.payload
         },
+        LoadPageByNumber: (state,action) => {
+            state.pageNumber = action.payload
+        },
+        setTotalPage: (state, action) => {
+            state.totalPage = action.payload
+        },
         sortMovieList: (state, action) => {
             state.movieList = action.payload
         }
@@ -40,4 +48,5 @@ const movieSlice = createSlice({
 
 export default movieSlice.reducer;
 
-export const {getStart, getError, getSuccess, setMovieBannerList, setSearchKey,sortMovieList} = movieSlice.actions
+export const {getStart, getError, getSuccess, 
+    setMovieBannerList, setSearchKey,sortMovieList,LoadPageByNumber, setTotalPage} = movieSlice.actions

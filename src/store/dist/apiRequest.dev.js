@@ -11,8 +11,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var getMovieFromApi = function getMovieFromApi(dispatch, movieListData, searchKey) {
-  var type, _ref, data, results, checkMovieList;
+var getMovieFromApi = function getMovieFromApi(dispatch, movieListData, searchKey, pageNumber) {
+  var type, _ref, data, results, total_pages, total_results, checkMovieList;
 
   return regeneratorRuntime.async(function getMovieFromApi$(_context) {
     while (1) {
@@ -25,7 +25,8 @@ var getMovieFromApi = function getMovieFromApi(dispatch, movieListData, searchKe
           return regeneratorRuntime.awrap(_axios["default"].get("http://api.themoviedb.org/3/".concat(type, "/movie"), {
             params: {
               api_key: process.env.REACT_APP_API_KEY,
-              query: searchKey
+              query: searchKey,
+              page: pageNumber
             }
           }));
 
@@ -33,28 +34,31 @@ var getMovieFromApi = function getMovieFromApi(dispatch, movieListData, searchKe
           _ref = _context.sent;
           data = _ref.data;
           results = data.results;
+          total_pages = data.total_pages, total_results = data.total_results;
+          console.log(total_pages + ' and results ' + total_results);
           console.log(results);
           checkMovieList = movieListData.length > 1 ? true : false;
+          dispatch((0, _movieSlice.setTotalPage)(total_pages));
 
           if (!checkMovieList) {
             dispatch((0, _movieSlice.setMovieBannerList)(results.slice(0, 3)));
           }
 
           dispatch((0, _movieSlice.getSuccess)(results));
-          _context.next = 17;
+          _context.next = 20;
           break;
 
-        case 14:
-          _context.prev = 14;
+        case 17:
+          _context.prev = 17;
           _context.t0 = _context["catch"](2);
           dispatch((0, _movieSlice.getError)());
 
-        case 17:
+        case 20:
         case "end":
           return _context.stop();
       }
     }
-  }, null, null, [[2, 14]]);
+  }, null, null, [[2, 17]]);
 };
 
 exports.getMovieFromApi = getMovieFromApi;
