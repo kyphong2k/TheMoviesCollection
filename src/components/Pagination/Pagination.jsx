@@ -19,7 +19,7 @@ const Pagination = (props) => {
       </button>
       <span className='mr-2'>{pageNum} of</span>
       <span className='mr-3'>{totalPage}</span>
-      <button disabled={pageNum === totalPage} 
+      <button disabled={pageNum === totalPage && pageNum < 1} 
         className='mr-3 enabled:hover:bg-slate-700 border-solid rounded-sm px-3 py-2 bg-slate-400 disabled:opacity-75'
         onClick={() =>  setPageNum(pageNum + 1)}>Next
       </button>
@@ -28,10 +28,10 @@ const Pagination = (props) => {
           className='outline-none py-2 px-3 rounded-sm w-[70px] bg-slate-300' 
           onChange = {(e) => setEnterPageNum(e.target.value)}
           placeholder={pageNum}
+          min='1' max={totalPage}
           required
           />  
         <button type='submit'
-          // disabled={isNaN(enterPageNum)} 
           className='ml-3 hover:bg-slate-700 bg-slate-400   border-solid rounded-sm px-3 py-2 '>Go To Page
         </button>
       </form>

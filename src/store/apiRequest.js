@@ -22,7 +22,13 @@ export const getMovieFromApi = async ( dispatch, movieListData, searchKey,pageNu
         console.log(total_pages + ' and results ' + total_results)
         console.log(results)
         const checkMovieList = movieListData.length > 1  ? true : false
-        dispatch(setTotalPage(total_pages))
+        if(total_pages>500){
+
+            dispatch(setTotalPage(500))
+        }else if(total_pages <= 500){
+            dispatch(setTotalPage(total_pages))
+        }
+
         if(!checkMovieList) {
             dispatch(setMovieBannerList(results.slice(0,3)))
         }

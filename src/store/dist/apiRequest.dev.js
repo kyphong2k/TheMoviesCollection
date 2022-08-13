@@ -38,7 +38,12 @@ var getMovieFromApi = function getMovieFromApi(dispatch, movieListData, searchKe
           console.log(total_pages + ' and results ' + total_results);
           console.log(results);
           checkMovieList = movieListData.length > 1 ? true : false;
-          dispatch((0, _movieSlice.setTotalPage)(total_pages));
+
+          if (total_pages > 500) {
+            dispatch((0, _movieSlice.setTotalPage)(500));
+          } else if (total_pages <= 500) {
+            dispatch((0, _movieSlice.setTotalPage)(total_pages));
+          }
 
           if (!checkMovieList) {
             dispatch((0, _movieSlice.setMovieBannerList)(results.slice(0, 3)));
