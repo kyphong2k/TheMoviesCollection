@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getMovieFromApi = void 0;
+exports.getMovieById = exports.getMoviesFromApi = void 0;
 
 var _movieSlice = require("./movieSlice");
 
@@ -11,10 +11,10 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var getMovieFromApi = function getMovieFromApi(dispatch, movieListData, searchKey, pageNumber) {
+var getMoviesFromApi = function getMoviesFromApi(dispatch, movieListData, searchKey, pageNumber) {
   var type, _ref, data, results, total_pages, total_results, checkMovieList;
 
-  return regeneratorRuntime.async(function getMovieFromApi$(_context) {
+  return regeneratorRuntime.async(function getMoviesFromApi$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
@@ -66,4 +66,44 @@ var getMovieFromApi = function getMovieFromApi(dispatch, movieListData, searchKe
   }, null, null, [[2, 17]]);
 };
 
-exports.getMovieFromApi = getMovieFromApi;
+exports.getMoviesFromApi = getMoviesFromApi;
+
+var getMovieById = function getMovieById(id, dispatch) {
+  var _ref2, data;
+
+  return regeneratorRuntime.async(function getMovieById$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          dispatch((0, _movieSlice.getStart)());
+          _context2.prev = 1;
+          _context2.next = 4;
+          return regeneratorRuntime.awrap(_axios["default"].get("https://api.themoviedb.org/3/movie/".concat(id), {
+            params: {
+              api_key: process.env.REACT_APP_API_KEY,
+              append_to_response: 'videos'
+            }
+          }));
+
+        case 4:
+          _ref2 = _context2.sent;
+          data = _ref2.data;
+          console.log(data);
+          dispatch((0, _movieSlice.setSelectMovie)(data));
+          _context2.next = 13;
+          break;
+
+        case 10:
+          _context2.prev = 10;
+          _context2.t0 = _context2["catch"](1);
+          dispatch((0, _movieSlice.getError)());
+
+        case 13:
+        case "end":
+          return _context2.stop();
+      }
+    }
+  }, null, null, [[1, 10]]);
+};
+
+exports.getMovieById = getMovieById;

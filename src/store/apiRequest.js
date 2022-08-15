@@ -1,8 +1,8 @@
-import { getStart, getError, getSuccess, setMovieBannerList, setTotalPage} from "./movieSlice";
+import { getStart, getError, getSuccess, setMovieBannerList, setTotalPage, setSelectMovie} from "./movieSlice";
 import axios from "axios";
 
 
-export const getMovieFromApi = async ( dispatch, movieListData, searchKey,pageNumber) => {
+export const getMoviesFromApi = async ( dispatch, movieListData, searchKey,pageNumber) => {
     const type = searchKey ? 'search' : 'discover'
 
     dispatch(getStart()) 
@@ -36,5 +36,23 @@ export const getMovieFromApi = async ( dispatch, movieListData, searchKey,pageNu
 
     }catch(err){
        dispatch(getError())
+    }
+}
+
+export const getMovieById = async (id, dispatch) => {
+    
+    dispatch(getStart())
+    try {
+        const {data} = await axios.get(`https://api.themoviedb.org/3/movie/${id}`,{
+        params: {
+            api_key: process.env.REACT_APP_API_KEY,
+            append_to_response: 'videos'
+            
+        }})
+        console.log(data)
+        dispatch(setSelectMovie(data))
+
+    }catch(err) {
+        dispatch(getError())
     }
 }

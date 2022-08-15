@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setTotalPage = exports.LoadPageByNumber = exports.sortMovieList = exports.setSearchKey = exports.setMovieBannerList = exports.getSuccess = exports.getError = exports.getStart = exports["default"] = void 0;
+exports.setTotalPage = exports.LoadPageByNumber = exports.sortMovieList = exports.setSearchKey = exports.setMovieBannerList = exports.setSelectMovie = exports.setOpenModal = exports.getSuccess = exports.getError = exports.getStart = exports["default"] = void 0;
 
 var _toolkit = require("@reduxjs/toolkit");
 
@@ -25,7 +25,9 @@ var movieSlice = (0, _toolkit.createSlice)({
     movieBannerList: [],
     searchKey: '',
     pageNumber: 1,
-    totalPage: 0
+    totalPage: 0,
+    openModal: false,
+    selectedMovie: ''
   },
   reducers: {
     getStart: function getStart(state) {
@@ -56,6 +58,15 @@ var movieSlice = (0, _toolkit.createSlice)({
     },
     sortMovieList: function sortMovieList(state, action) {
       state.movieList = action.payload;
+    },
+    setOpenModal: function setOpenModal(state, action) {
+      state.openModal = action.payload;
+    },
+    setSelectMovie: function setSelectMovie(state, action) {
+      state.selectedMovie = action.payload;
+      state.pending = false;
+      state.error = false;
+      state.status = true;
     }
   }
 });
@@ -65,6 +76,8 @@ var _movieSlice$actions = movieSlice.actions,
     getStart = _movieSlice$actions.getStart,
     getError = _movieSlice$actions.getError,
     getSuccess = _movieSlice$actions.getSuccess,
+    setOpenModal = _movieSlice$actions.setOpenModal,
+    setSelectMovie = _movieSlice$actions.setSelectMovie,
     setMovieBannerList = _movieSlice$actions.setMovieBannerList,
     setSearchKey = _movieSlice$actions.setSearchKey,
     sortMovieList = _movieSlice$actions.sortMovieList,
@@ -75,6 +88,8 @@ exports.LoadPageByNumber = LoadPageByNumber;
 exports.sortMovieList = sortMovieList;
 exports.setSearchKey = setSearchKey;
 exports.setMovieBannerList = setMovieBannerList;
+exports.setSelectMovie = setSelectMovie;
+exports.setOpenModal = setOpenModal;
 exports.getSuccess = getSuccess;
 exports.getError = getError;
 exports.getStart = getStart;

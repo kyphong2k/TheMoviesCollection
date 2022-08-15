@@ -6,9 +6,10 @@ import BannerSlider from './components/BannerSlider/BannerSlider';
 import FilterAndSearch from './components/FilterAndSearch/FilterAndSearch';
 import { TrendingDownIcon, TrendingUpIcon } from '@heroicons/react/solid';
 import {useSelector, useDispatch} from 'react-redux'
-import {getMovieFromApi} from './store/apiRequest';
+import {getMoviesFromApi} from './store/apiRequest';
 import MovieListWrapper from './components/MovieListWrapper/MovieListWrapper'
 import Pagination from './components/Pagination/Pagination';
+import Modal from './components/Modal/Modal';
 
 const App = () => {
   
@@ -18,11 +19,13 @@ const App = () => {
   const pageNumber = useSelector(state => state.movieData.pageNumber)
   const [pageNum, setPageNum] = useState(pageNumber)
   const [titleFilter, setTitleFilter] = useState('Popular')
+  const isOpenModal = useSelector(state=> state.movieData.openModal)
+  
   const dispatch = useDispatch()
   const searchKey = useSelector(state => state.movieData.searchKey)
   const statusGetApi = useSelector(state => state.movieData.status)
   useEffect(() => {
-    getMovieFromApi(dispatch, movieListBannerData, searchKey,pageNum)
+    getMoviesFromApi(dispatch, movieListBannerData, searchKey,pageNum)
    
   }, [searchKey,pageNum])
   
@@ -30,8 +33,8 @@ const App = () => {
   
 
   return (
-    <div className="App">
-      <div id="appWrapper" className="w-full h-fit">
+    <div className="App " >
+      <div id="appWrapper" className="w-full h-fit relative">
 
         <div id="title-app" className="text-center text-3xl text-yellow-100 py-3 bg-slate-900">The Movies Trailer</div>
 
@@ -48,6 +51,12 @@ const App = () => {
         <div className='mt-[20px] mx-7 max-w-[70%] flex justify-center'>
           <Pagination pageNum={pageNum} setPageNum={setPageNum}/>
         </div>
+        { isOpenModal 
+          ? 
+          <Modal/>
+          : 
+          null
+        }
       </div> 
     </div>
   );
