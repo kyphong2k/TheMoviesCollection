@@ -35,8 +35,6 @@ var getMoviesFromApi = function getMoviesFromApi(dispatch, movieListData, search
           data = _ref.data;
           results = data.results;
           total_pages = data.total_pages, total_results = data.total_results;
-          console.log(total_pages + ' and results ' + total_results);
-          console.log(results);
           checkMovieList = movieListData.length > 1 ? true : false;
 
           if (total_pages > 500) {
@@ -50,26 +48,26 @@ var getMoviesFromApi = function getMoviesFromApi(dispatch, movieListData, search
           }
 
           dispatch((0, _movieSlice.getSuccess)(results));
-          _context.next = 20;
+          _context.next = 18;
           break;
 
-        case 17:
-          _context.prev = 17;
+        case 15:
+          _context.prev = 15;
           _context.t0 = _context["catch"](2);
           dispatch((0, _movieSlice.getError)());
 
-        case 20:
+        case 18:
         case "end":
           return _context.stop();
       }
     }
-  }, null, null, [[2, 17]]);
+  }, null, null, [[2, 15]]);
 };
 
 exports.getMoviesFromApi = getMoviesFromApi;
 
 var getMovieById = function getMovieById(id, dispatch) {
-  var _ref2, data;
+  var _ref2, data, results, officialTrailer, trailer;
 
   return regeneratorRuntime.async(function getMovieById$(_context2) {
     while (1) {
@@ -88,22 +86,40 @@ var getMovieById = function getMovieById(id, dispatch) {
         case 4:
           _ref2 = _context2.sent;
           data = _ref2.data;
-          console.log(data);
+          // console.log(data)
+          results = data.videos.results;
+          console.log(results);
+          officialTrailer = results.find(function (result) {
+            return result.name.includes('Official Trailer');
+          });
+
+          if (officialTrailer !== undefined) {
+            // officialTrailer.sort((a,b) => {
+            //     return a.name.length - b.name.length
+            //  })
+            console.log(officialTrailer);
+            dispatch((0, _movieSlice.setVideoLink)(officialTrailer));
+          } else {
+            trailer = results[0];
+            console.log();
+            dispatch((0, _movieSlice.setVideoLink)(trailer));
+          }
+
           dispatch((0, _movieSlice.setSelectMovie)(data));
-          _context2.next = 13;
+          _context2.next = 16;
           break;
 
-        case 10:
-          _context2.prev = 10;
+        case 13:
+          _context2.prev = 13;
           _context2.t0 = _context2["catch"](1);
           dispatch((0, _movieSlice.getError)());
 
-        case 13:
+        case 16:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[1, 10]]);
+  }, null, null, [[1, 13]]);
 };
 
 exports.getMovieById = getMovieById;

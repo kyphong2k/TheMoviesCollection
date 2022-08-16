@@ -12,7 +12,8 @@ const movieSlice = createSlice({
         pageNumber: 1,
         totalPage: 0,
         openModal: false,
-        selectedMovie: ''
+        selectedMovie: '',
+        videoLink: ''
     },
     reducers: {
         getStart: (state) => {
@@ -53,11 +54,14 @@ const movieSlice = createSlice({
             state.pending = false;
             state.error = false;
             state.status = true
+        },
+        setVideoLink: (state, action) => {
+            state.videoLink = action.payload
         }
     }
 })
 
 export default movieSlice.reducer;
 
-export const {getStart, getError, getSuccess, setOpenModal, setSelectMovie,
+export const {getStart, getError, getSuccess, setOpenModal, setSelectMovie, setVideoLink,
     setMovieBannerList, setSearchKey,sortMovieList,LoadPageByNumber, setTotalPage, } = movieSlice.actions

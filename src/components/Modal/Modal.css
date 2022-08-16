@@ -1,7 +1,8 @@
+/*
 #tagList li:after {
   content: ", ";
 }
 #tagList li:last-child:after {
     content: ".";
 }
-
+*/

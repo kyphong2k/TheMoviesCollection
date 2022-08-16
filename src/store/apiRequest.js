@@ -1,4 +1,4 @@
-import { getStart, getError, getSuccess, setMovieBannerList, setTotalPage, setSelectMovie} from "./movieSlice";
+import { getStart, getError, getSuccess, setMovieBannerList, setTotalPage, setSelectMovie, setVideoLink} from "./movieSlice";
 import axios from "axios";
 
 
@@ -19,8 +19,7 @@ export const getMoviesFromApi = async ( dispatch, movieListData, searchKey,pageN
         })
         const {results} = data
         const {total_pages, total_results} = data
-        console.log(total_pages + ' and results ' + total_results)
-        console.log(results)
+        
         const checkMovieList = movieListData.length > 1  ? true : false
         if(total_pages>500){
 
@@ -49,7 +48,28 @@ export const getMovieById = async (id, dispatch) => {
             append_to_response: 'videos'
             
         }})
-        console.log(data)
+        // console.log(data)
+        const {results} = data.videos
+        console.log(results)
+        const officialTrailer = results.find(result => {
+            return result.name.includes('Official Trailer')
+        })
+        
+        
+        if(officialTrailer !== undefined) {
+            // officialTrailer.sort((a,b) => {
+            //     return a.name.length - b.name.length
+            //  })
+            console.log(officialTrailer)
+
+            dispatch(setVideoLink(officialTrailer))
+        }else{
+            const trailer = results[0]
+            console.log()
+            dispatch(setVideoLink(trailer))
+        }
+        
+
         dispatch(setSelectMovie(data))
 
     }catch(err) {
