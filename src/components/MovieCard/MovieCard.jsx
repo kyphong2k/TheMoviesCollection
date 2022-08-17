@@ -1,13 +1,12 @@
 import React from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import { useSelector} from 'react-redux'
 import {setOpenModal} from '../../store/movieSlice'
 import {getMovieById} from '../../store/apiRequest'
-const MovieCard = ({style, data}) => {
+const MovieCard = ({style, data, dispatch}) => {
   const IMAGE_PATH ="https://image.tmdb.org/t/p/w500";
   const movieData = data
   const selectedMovie = useSelector(state => state.movieData.selectedMovie)
 
-  const dispatch = useDispatch()
   const handleOpenDetail = async (movieId) => {
     await getMovieById(movieId, dispatch)
     if(selectedMovie !== undefined) {
@@ -16,7 +15,7 @@ const MovieCard = ({style, data}) => {
     }
   }
   return (
-     <div onClick={() => handleOpenDetail(movieData.id)} key= {movieData.id} className= {`${style} mb-9 max-w-[25%] hover:scale-110 cursor-pointer`}>
+     <div onClick={() => handleOpenDetail(movieData.id)} key= {movieData.id} className= {`${style} mb-9 max-w-[25%] hover:scale-110 hover:text-slate-700 transition duration-200 hover:ease-linear cursor-pointer`}>
         <img src={`${IMAGE_PATH}${movieData.poster_path}`} className='w-full h-full object-cover rounded' alt='movie Card' />
         <h5 className='text-center'>{movieData.title}</h5>
     </div>

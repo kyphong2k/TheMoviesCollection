@@ -18,7 +18,7 @@ const App = () => {
   const movieListBannerData = useSelector(state => state.movieData.movieBannerList)
   const pageNumber = useSelector(state => state.movieData.pageNumber)
   const [pageNum, setPageNum] = useState(pageNumber)
-  const [titleFilter, setTitleFilter] = useState('Popular')
+  // const [titleFilter, setTitleFilter] = useState('Popular')
   const isOpenModal = useSelector(state=> state.movieData.openModal)
   
   const dispatch = useDispatch()
@@ -27,7 +27,7 @@ const App = () => {
   useEffect(() => {
     getMoviesFromApi(dispatch, movieListBannerData, searchKey,pageNum)
    
-  }, [searchKey,pageNum])
+  }, [searchKey,pageNum, movieListBannerData,dispatch])
   
  
   
@@ -39,7 +39,7 @@ const App = () => {
         <div id="title-app" className="text-center text-3xl text-yellow-100 py-3 bg-slate-900">The Movies Trailer</div>
 
         {movieListBannerData.length > 0 ? <BannerSlider /> : null }
-        <FilterAndSearch setFilterType={setFilterType} setPageNum={setPageNum} setTitleType={setTitleFilter}/>
+        <FilterAndSearch setFilterType={setFilterType} setPageNum={setPageNum}/>
         <span id='sortTitle' className='mx-7 mt-2 flex-row'>Sort By: {filterType} {filterType.includes('asc')
           ?
           <TrendingUpIcon className='w-4 h-4 inline-block'/>
@@ -53,7 +53,7 @@ const App = () => {
         </div>
         { isOpenModal 
           ? 
-          <Modal/>
+           <Modal/>
           : 
           null
         }

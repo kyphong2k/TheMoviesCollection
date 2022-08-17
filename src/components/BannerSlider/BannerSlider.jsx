@@ -7,7 +7,6 @@ import ViewDetailButton from '../ViewDetailButton/ViewDetailButton';
 const BannerSlider  = () => {
     const POSTER_WIDTH_FULL = "https://image.tmdb.org/t/p/original/"
     const movieList = useSelector(state => state.movieData.movieBannerList)
-    const movieBannerList = movieList.slice(0,3)
     const settings = {
         infiniteLoop: true,
         autoPlay: true,
@@ -41,7 +40,7 @@ const BannerSlider  = () => {
           );
       }}>
         
-                {movieBannerList.map(movie => {
+                {movieList.map(movie => {
                     return (
                           <div key={movie.id} className='w-full max-h-full h-[500]'>
                               <div className='w-full h-full max-h-full'>

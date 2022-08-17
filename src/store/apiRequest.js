@@ -18,7 +18,7 @@ export const getMoviesFromApi = async ( dispatch, movieListData, searchKey,pageN
         
         })
         const {results} = data
-        const {total_pages, total_results} = data
+        const {total_pages} = data
         
         const checkMovieList = movieListData.length > 1  ? true : false
         if(total_pages>500){
@@ -29,7 +29,9 @@ export const getMoviesFromApi = async ( dispatch, movieListData, searchKey,pageN
         }
 
         if(!checkMovieList) {
-            dispatch(setMovieBannerList(results.slice(0,3)))
+            const bannerList = results.slice(0,5)
+            console.log(bannerList)
+            dispatch(setMovieBannerList(bannerList))
         }
         dispatch(getSuccess(results))
 
@@ -51,26 +53,35 @@ export const getMovieById = async (id, dispatch) => {
         // console.log(data)
         const {results} = data.videos
         console.log(results)
-        const officialTrailer = results.find(result => {
-            return result.name.includes('Official Trailer')
-        })
-        
-        
-        if(officialTrailer !== undefined) {
-            // officialTrailer.sort((a,b) => {
-            //     return a.name.length - b.name.length
-            //  })
-            console.log(officialTrailer)
+        if(results.length > 0) {
 
-            dispatch(setVideoLink(officialTrailer))
-        }else{
-            const trailer = results[0]
-            console.log()
-            dispatch(setVideoLink(trailer))
+            const officialTrailer = results.filter(result => {
+                return result.name.includes('Trailer')
+            })
+            if(officialTrailer.length > 0) {
+                officialTrailer.sort((a,b) => {
+                    return a.name.length - b.name.length
+                    //because object have some name 'official trailer ['1','2']' 
+                    //so i just want to take offcial trailer
+                    
+                 })
+                console.log(officialTrailer)
+    
+                dispatch(setVideoLink(officialTrailer[0]))
+                // take the items
+            }else{
+                
+                dispatch(setVideoLink(results[0]))
+            }
+            dispatch(setSelectMovie(data))
+
+        }else {
+            // i don't know what happen if it have error in here ^^. wait me reasearch more
         }
         
+        
+        
 
-        dispatch(setSelectMovie(data))
 
     }catch(err) {
         dispatch(getError())

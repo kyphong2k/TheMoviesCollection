@@ -16,7 +16,7 @@ const ViewDetailButton = (prop) => {
 
     }
   return (
-    <button onClick={clickOpenModal} className='flex items-center h-[38px] py-2 px-3 bg-slate-200 rounded hover:bg-slate-400 hover:text-yellow-300'>
+    <button onClick={clickOpenModal} className=' transition-all hover:ease-linear duration-300 flex items-center h-[38px] py-2 px-3 bg-slate-200 rounded hover:bg-slate-400 hover:text-yellow-300'>
         View Detail
     </button>
   )

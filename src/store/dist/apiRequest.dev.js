@@ -12,7 +12,7 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var getMoviesFromApi = function getMoviesFromApi(dispatch, movieListData, searchKey, pageNumber) {
-  var type, _ref, data, results, total_pages, total_results, checkMovieList;
+  var type, _ref, data, results, total_pages, checkMovieList, bannerList;
 
   return regeneratorRuntime.async(function getMoviesFromApi$(_context) {
     while (1) {
@@ -34,7 +34,7 @@ var getMoviesFromApi = function getMoviesFromApi(dispatch, movieListData, search
           _ref = _context.sent;
           data = _ref.data;
           results = data.results;
-          total_pages = data.total_pages, total_results = data.total_results;
+          total_pages = data.total_pages;
           checkMovieList = movieListData.length > 1 ? true : false;
 
           if (total_pages > 500) {
@@ -44,7 +44,9 @@ var getMoviesFromApi = function getMoviesFromApi(dispatch, movieListData, search
           }
 
           if (!checkMovieList) {
-            dispatch((0, _movieSlice.setMovieBannerList)(results.slice(0, 3)));
+            bannerList = results.slice(0, 5);
+            console.log(bannerList);
+            dispatch((0, _movieSlice.setMovieBannerList)(bannerList));
           }
 
           dispatch((0, _movieSlice.getSuccess)(results));
@@ -67,7 +69,7 @@ var getMoviesFromApi = function getMoviesFromApi(dispatch, movieListData, search
 exports.getMoviesFromApi = getMoviesFromApi;
 
 var getMovieById = function getMovieById(id, dispatch) {
-  var _ref2, data, results, officialTrailer, trailer;
+  var _ref2, data, results, officialTrailer;
 
   return regeneratorRuntime.async(function getMovieById$(_context2) {
     while (1) {
@@ -89,37 +91,41 @@ var getMovieById = function getMovieById(id, dispatch) {
           // console.log(data)
           results = data.videos.results;
           console.log(results);
-          officialTrailer = results.find(function (result) {
-            return result.name.includes('Official Trailer');
-          });
 
-          if (officialTrailer !== undefined) {
-            // officialTrailer.sort((a,b) => {
-            //     return a.name.length - b.name.length
-            //  })
-            console.log(officialTrailer);
-            dispatch((0, _movieSlice.setVideoLink)(officialTrailer));
-          } else {
-            trailer = results[0];
-            console.log();
-            dispatch((0, _movieSlice.setVideoLink)(trailer));
+          if (results.length > 0) {
+            officialTrailer = results.filter(function (result) {
+              return result.name.includes('Trailer');
+            });
+
+            if (officialTrailer.length > 0) {
+              officialTrailer.sort(function (a, b) {
+                return a.name.length - b.name.length; //because object have some name 'official trailer ['1','2']' 
+                //so i just want to take offcial trailer
+              });
+              console.log(officialTrailer);
+              dispatch((0, _movieSlice.setVideoLink)(officialTrailer[0])); // take the items
+            } else {
+              dispatch((0, _movieSlice.setVideoLink)(results[0]));
+            }
+
+            dispatch((0, _movieSlice.setSelectMovie)(data));
+          } else {// i don't know what happen if it have error in here ^^. wait me reasearch more
           }
 
-          dispatch((0, _movieSlice.setSelectMovie)(data));
-          _context2.next = 16;
+          _context2.next = 14;
           break;
 
-        case 13:
-          _context2.prev = 13;
+        case 11:
+          _context2.prev = 11;
           _context2.t0 = _context2["catch"](1);
           dispatch((0, _movieSlice.getError)());
 
-        case 16:
+        case 14:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[1, 13]]);
+  }, null, null, [[1, 11]]);
 };
 
 exports.getMovieById = getMovieById;
