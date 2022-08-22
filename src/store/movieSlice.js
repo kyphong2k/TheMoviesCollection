@@ -13,7 +13,10 @@ const movieSlice = createSlice({
         totalPage: 0,
         openModal: false,
         selectedMovie: '',
-        videoLink: ''
+        videoLink: '',
+        castList: [],
+        overview: '',
+        castImgLinkList: []
     },
     reducers: {
         getStart: (state) => {
@@ -57,11 +60,20 @@ const movieSlice = createSlice({
         },
         setVideoLink: (state, action) => {
             state.videoLink = action.payload
+        },
+        setCastList: (state, action) => {
+            state.castList = [...action.payload]
+        },
+        setOverview: (state,action) => {
+            state.overview = action.payload
+        },
+        setCastImgLinkList: (state, action) => {
+            state.castImgLinkList = [state.castImgLinkList, ...action.payload]
         }
     }
 })
 
 export default movieSlice.reducer;
 
-export const {getStart, getError, getSuccess, setOpenModal, setSelectMovie, setVideoLink,
-    setMovieBannerList, setSearchKey,sortMovieList,LoadPageByNumber, setTotalPage, } = movieSlice.actions
+export const {getStart, getError, getSuccess, setOpenModal, setSelectMovie, setVideoLink,setCastList, setOverview,
+    setMovieBannerList, setSearchKey,sortMovieList,LoadPageByNumber, setTotalPage, setCastImgLinkList } = movieSlice.actions

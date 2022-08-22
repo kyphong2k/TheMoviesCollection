@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {setOpenModal, setSelecteMovie} from '../../store/movieSlice'
-import {getMovieById} from '../../store/apiRequest'
+import {setOpenModal} from '../../store/movieSlice'
+import {getCastsFromMovie, getMovieById} from '../../store/apiRequest'
 const ViewDetailButton = (prop) => {
     const movieId = prop.movieId
     const selectedMovie = useSelector(state => state.movieData.selectedMovie)
@@ -9,6 +9,7 @@ const ViewDetailButton = (prop) => {
     const dispatch = useDispatch()
     const clickOpenModal =  async() => {
        await getMovieById(movieId, dispatch)
+       await getCastsFromMovie(movieId, dispatch)
         if(selectedMovie !== undefined) {
 
           dispatch(setOpenModal(true))

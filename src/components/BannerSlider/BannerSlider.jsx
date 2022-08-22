@@ -8,7 +8,7 @@ const BannerSlider  = () => {
     const POSTER_WIDTH_FULL = "https://image.tmdb.org/t/p/original/"
     const movieList = useSelector(state => state.movieData.movieBannerList)
     const settings = {
-        infiniteLoop: true,
+        infiniteLoop: false,
         autoPlay: true,
         interval: 5000,
         // centerMode: true,

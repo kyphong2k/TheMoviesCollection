@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector} from 'react-redux'
 import {setOpenModal} from '../../store/movieSlice'
-import {getMovieById} from '../../store/apiRequest'
+import {getCastsFromMovie, getMovieById} from '../../store/apiRequest'
 const MovieCard = ({style, data, dispatch}) => {
   const IMAGE_PATH ="https://image.tmdb.org/t/p/w500";
   const movieData = data
@@ -9,6 +9,7 @@ const MovieCard = ({style, data, dispatch}) => {
 
   const handleOpenDetail = async (movieId) => {
     await getMovieById(movieId, dispatch)
+    await getCastsFromMovie(movieId, dispatch)
     if(selectedMovie !== undefined) {
 
       dispatch(setOpenModal(true))

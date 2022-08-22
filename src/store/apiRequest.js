@@ -1,4 +1,6 @@
-import { getStart, getError, getSuccess, setMovieBannerList, setTotalPage, setSelectMovie, setVideoLink} from "./movieSlice";
+import { getStart, getError, getSuccess, setMovieBannerList, setTotalPage, 
+        setSelectMovie, setVideoLink,setCastList, setOverview, setCastImgLinkList} 
+    from "./movieSlice";
 import axios from "axios";
 
 
@@ -44,15 +46,20 @@ export const getMovieById = async (id, dispatch) => {
     
     dispatch(getStart())
     try {
-        const {data} = await axios.get(`https://api.themoviedb.org/3/movie/${id}`,{
+        const movieData = await axios.get(`https://api.themoviedb.org/3/movie/${id}`,{
         params: {
             api_key: process.env.REACT_APP_API_KEY,
             append_to_response: 'videos'
             
         }})
-        // console.log(data)
-        const {results} = data.videos
-        console.log(results)
+       
+        const {results} = movieData.data.videos
+        console.log(movieData)
+        // take results from movieData
+        // console.log(results)
+        dispatch(setOverview(movieData.data.overview))
+       
+
         if(results.length > 0) {
 
             const officialTrailer = results.filter(result => {
@@ -65,7 +72,7 @@ export const getMovieById = async (id, dispatch) => {
                     //so i just want to take offcial trailer
                     
                  })
-                console.log(officialTrailer)
+                // console.log(officialTrailer)
     
                 dispatch(setVideoLink(officialTrailer[0]))
                 // take the items
@@ -73,7 +80,7 @@ export const getMovieById = async (id, dispatch) => {
                 
                 dispatch(setVideoLink(results[0]))
             }
-            dispatch(setSelectMovie(data))
+            dispatch(setSelectMovie(movieData.data))
 
         }else {
             // i don't know what happen if it have error in here ^^. wait me reasearch more
@@ -85,5 +92,40 @@ export const getMovieById = async (id, dispatch) => {
 
     }catch(err) {
         dispatch(getError())
+    }
+}
+
+export const getCastsFromMovie = async (id, dispatch) => {
+    try {
+        const castsData = await axios.get(`https:api.themoviedb.org/3/movie/${id}/credits`, {
+                params: {
+                    api_key: process.env.REACT_APP_API_KEY,
+                }
+            })
+        const {cast} = castsData.data
+
+       
+        if(cast.length > 0) {
+            dispatch(setCastList(cast))
+        }
+    }catch(err) {
+        dispatch(getError())
+    }
+}
+
+export const getImageLink = async (id, dispatch) => {
+    try {
+        const {data} = await axios.get(`https://api.themoviedb.org/3/person/${id}/images`, {
+              params: {
+                  api_key: process.env.REACT_APP_API_KEY,
+              }
+          })
+          const pathImg = data.profiles[0].file_path
+        if (pathImg !== "") {
+            dispatch(setCastImgLinkList(pathImg))
+            console.log('getImg cast successful')
+        }
+    }catch(err) {
+
     }
 }

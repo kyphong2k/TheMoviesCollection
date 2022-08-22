@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getMovieById = exports.getMoviesFromApi = void 0;
+exports.getImageLink = exports.getCastsFromMovie = exports.getMovieById = exports.getMoviesFromApi = void 0;
 
 var _movieSlice = require("./movieSlice");
 
@@ -69,8 +69,7 @@ var getMoviesFromApi = function getMoviesFromApi(dispatch, movieListData, search
 exports.getMoviesFromApi = getMoviesFromApi;
 
 var getMovieById = function getMovieById(id, dispatch) {
-  var _ref2, data, results, officialTrailer;
-
+  var movieData, results, officialTrailer;
   return regeneratorRuntime.async(function getMovieById$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
@@ -86,11 +85,12 @@ var getMovieById = function getMovieById(id, dispatch) {
           }));
 
         case 4:
-          _ref2 = _context2.sent;
-          data = _ref2.data;
-          // console.log(data)
-          results = data.videos.results;
-          console.log(results);
+          movieData = _context2.sent;
+          results = movieData.data.videos.results;
+          console.log(movieData); // take results from movieData
+          // console.log(results)
+
+          dispatch((0, _movieSlice.setOverview)(movieData.data.overview));
 
           if (results.length > 0) {
             officialTrailer = results.filter(function (result) {
@@ -101,14 +101,14 @@ var getMovieById = function getMovieById(id, dispatch) {
               officialTrailer.sort(function (a, b) {
                 return a.name.length - b.name.length; //because object have some name 'official trailer ['1','2']' 
                 //so i just want to take offcial trailer
-              });
-              console.log(officialTrailer);
+              }); // console.log(officialTrailer)
+
               dispatch((0, _movieSlice.setVideoLink)(officialTrailer[0])); // take the items
             } else {
               dispatch((0, _movieSlice.setVideoLink)(results[0]));
             }
 
-            dispatch((0, _movieSlice.setSelectMovie)(data));
+            dispatch((0, _movieSlice.setSelectMovie)(movieData.data));
           } else {// i don't know what happen if it have error in here ^^. wait me reasearch more
           }
 
@@ -129,3 +129,85 @@ var getMovieById = function getMovieById(id, dispatch) {
 };
 
 exports.getMovieById = getMovieById;
+
+var getCastsFromMovie = function getCastsFromMovie(id, dispatch) {
+  var castsData, cast;
+  return regeneratorRuntime.async(function getCastsFromMovie$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.prev = 0;
+          _context3.next = 3;
+          return regeneratorRuntime.awrap(_axios["default"].get("https:api.themoviedb.org/3/movie/".concat(id, "/credits"), {
+            params: {
+              api_key: process.env.REACT_APP_API_KEY
+            }
+          }));
+
+        case 3:
+          castsData = _context3.sent;
+          cast = castsData.data.cast;
+
+          if (cast.length > 0) {
+            dispatch((0, _movieSlice.setCastList)(cast));
+          }
+
+          _context3.next = 11;
+          break;
+
+        case 8:
+          _context3.prev = 8;
+          _context3.t0 = _context3["catch"](0);
+          dispatch((0, _movieSlice.getError)());
+
+        case 11:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  }, null, null, [[0, 8]]);
+};
+
+exports.getCastsFromMovie = getCastsFromMovie;
+
+var getImageLink = function getImageLink(id, dispatch) {
+  var _ref2, data, pathImg;
+
+  return regeneratorRuntime.async(function getImageLink$(_context4) {
+    while (1) {
+      switch (_context4.prev = _context4.next) {
+        case 0:
+          _context4.prev = 0;
+          _context4.next = 3;
+          return regeneratorRuntime.awrap(_axios["default"].get("https://api.themoviedb.org/3/person/".concat(id, "/images"), {
+            params: {
+              api_key: process.env.REACT_APP_API_KEY
+            }
+          }));
+
+        case 3:
+          _ref2 = _context4.sent;
+          data = _ref2.data;
+          pathImg = data.profiles[0].file_path;
+
+          if (pathImg !== "") {
+            dispatch((0, _movieSlice.setCastImgLinkList)(pathImg));
+            console.log('getImg cast successful');
+          }
+
+          _context4.next = 11;
+          break;
+
+        case 9:
+          _context4.prev = 9;
+          _context4.t0 = _context4["catch"](0);
+
+        case 11:
+        case "end":
+          return _context4.stop();
+      }
+    }
+  }, null, null, [[0, 9]]);
+};
+
+exports.getImageLink = getImageLink;

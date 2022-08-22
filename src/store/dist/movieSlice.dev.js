@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.setTotalPage = exports.LoadPageByNumber = exports.sortMovieList = exports.setSearchKey = exports.setMovieBannerList = exports.setVideoLink = exports.setSelectMovie = exports.setOpenModal = exports.getSuccess = exports.getError = exports.getStart = exports["default"] = void 0;
+exports.setCastImgLinkList = exports.setTotalPage = exports.LoadPageByNumber = exports.sortMovieList = exports.setSearchKey = exports.setMovieBannerList = exports.setOverview = exports.setCastList = exports.setVideoLink = exports.setSelectMovie = exports.setOpenModal = exports.getSuccess = exports.getError = exports.getStart = exports["default"] = void 0;
 
 var _toolkit = require("@reduxjs/toolkit");
 
@@ -28,7 +28,10 @@ var movieSlice = (0, _toolkit.createSlice)({
     totalPage: 0,
     openModal: false,
     selectedMovie: '',
-    videoLink: ''
+    videoLink: '',
+    castList: [],
+    overview: '',
+    castImgLinkList: []
   },
   reducers: {
     getStart: function getStart(state) {
@@ -71,6 +74,15 @@ var movieSlice = (0, _toolkit.createSlice)({
     },
     setVideoLink: function setVideoLink(state, action) {
       state.videoLink = action.payload;
+    },
+    setCastList: function setCastList(state, action) {
+      state.castList = _toConsumableArray(action.payload);
+    },
+    setOverview: function setOverview(state, action) {
+      state.overview = action.payload;
+    },
+    setCastImgLinkList: function setCastImgLinkList(state, action) {
+      state.castImgLinkList = [state.castImgLinkList].concat(_toConsumableArray(action.payload));
     }
   }
 });
@@ -83,16 +95,22 @@ var _movieSlice$actions = movieSlice.actions,
     setOpenModal = _movieSlice$actions.setOpenModal,
     setSelectMovie = _movieSlice$actions.setSelectMovie,
     setVideoLink = _movieSlice$actions.setVideoLink,
+    setCastList = _movieSlice$actions.setCastList,
+    setOverview = _movieSlice$actions.setOverview,
     setMovieBannerList = _movieSlice$actions.setMovieBannerList,
     setSearchKey = _movieSlice$actions.setSearchKey,
     sortMovieList = _movieSlice$actions.sortMovieList,
     LoadPageByNumber = _movieSlice$actions.LoadPageByNumber,
-    setTotalPage = _movieSlice$actions.setTotalPage;
+    setTotalPage = _movieSlice$actions.setTotalPage,
+    setCastImgLinkList = _movieSlice$actions.setCastImgLinkList;
+exports.setCastImgLinkList = setCastImgLinkList;
 exports.setTotalPage = setTotalPage;
 exports.LoadPageByNumber = LoadPageByNumber;
 exports.sortMovieList = sortMovieList;
 exports.setSearchKey = setSearchKey;
 exports.setMovieBannerList = setMovieBannerList;
+exports.setOverview = setOverview;
+exports.setCastList = setCastList;
 exports.setVideoLink = setVideoLink;
 exports.setSelectMovie = setSelectMovie;
 exports.setOpenModal = setOpenModal;
