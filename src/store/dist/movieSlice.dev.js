@@ -22,6 +22,7 @@ var movieSlice = (0, _toolkit.createSlice)({
     error: false,
     status: false,
     movieList: [],
+    movieListAfterSort: [],
     movieBannerList: [],
     searchKey: '',
     pageNumber: 1,
@@ -61,7 +62,7 @@ var movieSlice = (0, _toolkit.createSlice)({
       state.totalPage = action.payload;
     },
     sortMovieList: function sortMovieList(state, action) {
-      state.movieList = action.payload;
+      state.movieListAfterSort = _toConsumableArray(action.payload);
     },
     setOpenModal: function setOpenModal(state, action) {
       state.openModal = action.payload;

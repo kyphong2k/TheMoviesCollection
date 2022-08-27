@@ -1,20 +1,20 @@
 import { getStart, getError, getSuccess, setMovieBannerList, setTotalPage, 
-        setSelectMovie, setVideoLink,setCastList, setOverview, setCastImgLinkList} 
+        setSelectMovie, setVideoLink,setCastList, setOverview, sortMovieList} 
     from "./movieSlice";
 import axios from "axios";
 
 
-export const getMoviesFromApi = async ( dispatch, movieListData, searchKey,pageNumber) => {
+export const getMoviesFromApi = async ( dispatch, movieListData, searchKey,pageNumber ) => {
     const type = searchKey ? 'search' : 'discover'
-
     dispatch(getStart()) 
     try {
-
+        
         const {data} = await axios.get(`http://api.themoviedb.org/3/${type}/movie`, {
             params: {
                 api_key: process.env.REACT_APP_API_KEY,
                 query: searchKey,
-                page: pageNumber
+                page: pageNumber,
+                
                 
             }
         
@@ -113,19 +113,28 @@ export const getCastsFromMovie = async (id, dispatch) => {
     }
 }
 
-export const getImageLink = async (id, dispatch) => {
+export const getMovieByGenre = async (id, dispatch, pageNumber) => {
     try {
-        const {data} = await axios.get(`https://api.themoviedb.org/3/person/${id}/images`, {
-              params: {
-                  api_key: process.env.REACT_APP_API_KEY,
-              }
-          })
-          const pathImg = data.profiles[0].file_path
-        if (pathImg !== "") {
-            dispatch(setCastImgLinkList(pathImg))
-            console.log('getImg cast successful')
-        }
-    }catch(err) {
+        const {data} = await axios.get(`https://api.themoviedb.org/3/discover/movie/`, {
+            params: {
+                    api_key: process.env.REACT_APP_API_KEY,
+                    with_genres: id,
+                    page: pageNumber,
 
+            }
+        })
+        const {results} = data
+        console.log(results)
+        const {total_pages} = data
+        
+        if(total_pages>500){
+
+            dispatch(setTotalPage(500))
+        }else if(total_pages <= 500){
+            dispatch(setTotalPage(total_pages))
+        }
+        dispatch(sortMovieList(results))
+    }catch(err) {
+        console.log(err)
     }
 }

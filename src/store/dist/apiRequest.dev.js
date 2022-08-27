@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getImageLink = exports.getCastsFromMovie = exports.getMovieById = exports.getMoviesFromApi = void 0;
+exports.getMovieByGenre = exports.getCastsFromMovie = exports.getMovieById = exports.getMoviesFromApi = void 0;
 
 var _movieSlice = require("./movieSlice");
 
@@ -170,44 +170,51 @@ var getCastsFromMovie = function getCastsFromMovie(id, dispatch) {
 
 exports.getCastsFromMovie = getCastsFromMovie;
 
-var getImageLink = function getImageLink(id, dispatch) {
-  var _ref2, data, pathImg;
+var getMovieByGenre = function getMovieByGenre(id, dispatch, pageNumber) {
+  var _ref2, data, results, total_pages;
 
-  return regeneratorRuntime.async(function getImageLink$(_context4) {
+  return regeneratorRuntime.async(function getMovieByGenre$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
           _context4.prev = 0;
           _context4.next = 3;
-          return regeneratorRuntime.awrap(_axios["default"].get("https://api.themoviedb.org/3/person/".concat(id, "/images"), {
+          return regeneratorRuntime.awrap(_axios["default"].get("https://api.themoviedb.org/3/discover/movie/", {
             params: {
-              api_key: process.env.REACT_APP_API_KEY
+              api_key: process.env.REACT_APP_API_KEY,
+              with_genres: id,
+              page: pageNumber
             }
           }));
 
         case 3:
           _ref2 = _context4.sent;
           data = _ref2.data;
-          pathImg = data.profiles[0].file_path;
+          results = data.results;
+          console.log(results);
+          total_pages = data.total_pages;
 
-          if (pathImg !== "") {
-            dispatch((0, _movieSlice.setCastImgLinkList)(pathImg));
-            console.log('getImg cast successful');
+          if (total_pages > 500) {
+            dispatch((0, _movieSlice.setTotalPage)(500));
+          } else if (total_pages <= 500) {
+            dispatch((0, _movieSlice.setTotalPage)(total_pages));
           }
 
-          _context4.next = 11;
+          dispatch((0, _movieSlice.sortMovieList)(results));
+          _context4.next = 15;
           break;
 
-        case 9:
-          _context4.prev = 9;
+        case 12:
+          _context4.prev = 12;
           _context4.t0 = _context4["catch"](0);
+          console.log(_context4.t0);
 
-        case 11:
+        case 15:
         case "end":
           return _context4.stop();
       }
     }
-  }, null, null, [[0, 9]]);
+  }, null, null, [[0, 12]]);
 };
 
-exports.getImageLink = getImageLink;
+exports.getMovieByGenre = getMovieByGenre;

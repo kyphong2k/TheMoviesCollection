@@ -7,6 +7,7 @@ const movieSlice = createSlice({
         error: false,
         status: false,
         movieList: [],
+        movieListAfterSort: [],
         movieBannerList: [],
         searchKey: '',
         pageNumber: 1,
@@ -47,7 +48,7 @@ const movieSlice = createSlice({
             state.totalPage = action.payload
         },
         sortMovieList: (state, action) => {
-            state.movieList = action.payload
+            state.movieListAfterSort = [...action.payload]
         },
         setOpenModal: (state, action) => {
             state.openModal = action.payload

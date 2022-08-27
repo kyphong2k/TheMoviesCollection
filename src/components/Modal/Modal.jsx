@@ -13,7 +13,13 @@ const Modal = () => {
     const genreLength = movieSelected.genres.length
     const onPlayerReady = (event) => {
       // access to player in all event handlers via event.target
+
       event.target.pauseVideo();
+    }
+    const opts = {
+      display: 'grid',
+      playerVars: { 'autoplay': 0, 'controls': 1,'origin':'http://localhost:8100' },
+
     }
 
     const closeModal = () => {
@@ -27,7 +33,7 @@ const Modal = () => {
         </button>
         <div id='modalContent' className='absolute w-[96%] h-[90%] mt-10 flex left-[2%] right-[2%] gap-4'>
             <div id="videoFrame" className='flex-auto w-50 h-full'>
-              <YouTube opts={{display: 'grid'}} videoId={`${key}`} onReady={onPlayerReady}/>
+              <YouTube opts={opts} videoId={`${key}`} onReady={onPlayerReady}/>
               <div id="casts">
                   <CastsInfo/>
               </div>
