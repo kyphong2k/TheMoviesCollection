@@ -3,13 +3,19 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getMovieByGenre = exports.getCastsFromMovie = exports.getMovieById = exports.getMoviesFromApi = void 0;
+exports.getMovieAfterSort = exports.getCastsFromMovie = exports.getMovieById = exports.getMoviesFromApi = void 0;
 
 var _movieSlice = require("./movieSlice");
 
 var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var getMoviesFromApi = function getMoviesFromApi(dispatch, movieListData, searchKey, pageNumber) {
   var type, _ref, data, results, total_pages, checkMovieList, bannerList;
@@ -170,24 +176,29 @@ var getCastsFromMovie = function getCastsFromMovie(id, dispatch) {
 
 exports.getCastsFromMovie = getCastsFromMovie;
 
-var getMovieByGenre = function getMovieByGenre(id, dispatch, pageNumber) {
-  var _ref2, data, results, total_pages;
+var getMovieAfterSort = function getMovieAfterSort(id, dispatch, pageNumber, type) {
+  var typeSort, _ref2, data, results, total_pages;
 
-  return regeneratorRuntime.async(function getMovieByGenre$(_context4) {
+  return regeneratorRuntime.async(function getMovieAfterSort$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
           _context4.prev = 0;
-          _context4.next = 3;
+          typeSort = type === 'year' ? {
+            year: id
+          } : {
+            with_genres: id
+          };
+          console.log(typeSort);
+          _context4.next = 5;
           return regeneratorRuntime.awrap(_axios["default"].get("https://api.themoviedb.org/3/discover/movie/", {
-            params: {
+            params: _objectSpread({
               api_key: process.env.REACT_APP_API_KEY,
-              with_genres: id,
               page: pageNumber
-            }
+            }, typeSort)
           }));
 
-        case 3:
+        case 5:
           _ref2 = _context4.sent;
           data = _ref2.data;
           results = data.results;
@@ -201,20 +212,20 @@ var getMovieByGenre = function getMovieByGenre(id, dispatch, pageNumber) {
           }
 
           dispatch((0, _movieSlice.sortMovieList)(results));
-          _context4.next = 15;
+          _context4.next = 17;
           break;
 
-        case 12:
-          _context4.prev = 12;
+        case 14:
+          _context4.prev = 14;
           _context4.t0 = _context4["catch"](0);
           console.log(_context4.t0);
 
-        case 15:
+        case 17:
         case "end":
           return _context4.stop();
       }
     }
-  }, null, null, [[0, 12]]);
+  }, null, null, [[0, 14]]);
 };
 
-exports.getMovieByGenre = getMovieByGenre;
+exports.getMovieAfterSort = getMovieAfterSort;

@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import BannerSlider from './components/BannerSlider/BannerSlider';
 import FilterAndSearch from './components/FilterAndSearch/FilterAndSearch';
 import {useSelector, useDispatch} from 'react-redux'
-import {getMoviesFromApi, getMovieByGenre} from './store/apiRequest';
+import {getMoviesFromApi, getMovieAfterSort} from './store/apiRequest';
 import MovieListWrapper from './components/MovieListWrapper/MovieListWrapper'
 import Pagination from './components/Pagination/Pagination';
 import Modal from './components/Modal/Modal';
@@ -21,16 +21,28 @@ const App = () => {
   const dispatch = useDispatch()
   const searchKey = useSelector(state => state.movieData.searchKey)
   const statusGetApi = useSelector(state => state.movieData.status)
+
+  // state of sort method
   const [idGenre, setIdGenre] = useState('')
+  const [year, setYear] = useState('')
+  const [typeSort , setTypeSort] = useState('')
+
   useEffect(() => {
     if(hadSortMovieList.length > 2) {
-      getMovieByGenre(idGenre, dispatch, pageNum)
+      if(typeSort === 'genre') {
+
+        getMovieAfterSort(idGenre, dispatch, pageNum, typeSort)
+      }
+      else if (typeSort === 'year') {
+        getMovieAfterSort(idGenre, dispatch, pageNum, typeSort)
+        
+      }
     }else{
-      getMoviesFromApi(dispatch, movieListBannerData, searchKey,pageNum, 'f')
+      getMoviesFromApi(dispatch, movieListBannerData, searchKey,pageNum)
 
     }
    
-  }, [searchKey,pageNum, movieListBannerData,dispatch, idGenre])
+  }, [searchKey,pageNum, movieListBannerData,dispatch, idGenre, typeSort])
   
  
   
@@ -44,7 +56,7 @@ const App = () => {
         </div>
 
         {movieListBannerData.length > 0 ? <BannerSlider /> : null }
-        <FilterAndSearch  setPageNum={setPageNum} setIdGenre= {setIdGenre}/>
+        <FilterAndSearch  setPageNum={setPageNum} setIdGenre= {setIdGenre} setYear= {setYear} setTypeSort={setTypeSort}/>
         
         {statusGetApi ? <MovieListWrapper />: null}
         <div className='mt-[20px] mx-7 max-w-[70%] flex justify-center'>

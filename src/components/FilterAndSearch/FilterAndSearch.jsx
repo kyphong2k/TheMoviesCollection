@@ -2,10 +2,10 @@ import React, {  useState } from 'react'
 import {FilterIcon, ChevronDownIcon, SearchIcon} from '@heroicons/react/solid'
 import { useDispatch, useSelector} from 'react-redux';
 import {setSearchKey} from '../../store/movieSlice'
-import { getMovieByGenre } from '../../store/apiRequest';
-const FilterAndSearch = ({ setPageNum, setIdGenre}) => {
+import { getMovieAfterSort } from '../../store/apiRequest';
+const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
   const [searchKeyString, setSearchKeyString] = useState('');
-  const [isActive, setIsActive] = useState(false)
+  const [isActive, setIsActive] = useState(false);
   const dispatch = useDispatch()
   // const hadSortMovieList = useSelector(state => state.movieData.movieListAfterSort)
 
@@ -30,17 +30,31 @@ const FilterAndSearch = ({ setPageNum, setIdGenre}) => {
     {id: 10752,name:'War'},
     {id: 37,name:'Western'}
   ]
+
+  const releaseYear = [2007, 2008, 2009, 2010, 2011, 2012, 2013,2014, 2015,2016, 2017, 2018, 2019, 2020, 2021, 2022]
   const handleSubmit = (e) => {
     e.preventDefault()
     setPageNum(1)
     dispatch(setSearchKey(searchKeyString))
   }
   
-  const handleSortByGenre = async (id) => {
-    await getMovieByGenre(id, dispatch, 1)
-    setIsActive(id)
-    setPageNum(1)
-    setIdGenre(id)
+  const handleSortByOption = async (id, type) => {
+    if(type === 'genre') {
+      await getMovieAfterSort(id, dispatch, 1, type)
+      setIsActive(id)
+      setPageNum(1)
+      setIdGenre(id)
+      setTypeSort(type)
+
+    }
+    else if(type === 'year') {
+      await getMovieAfterSort(id, dispatch, 1, type)
+      setIsActive(id);
+      setPageNum(1)
+      setYear(id)
+      setTypeSort(type)
+
+    }
 
   }
  
@@ -55,7 +69,7 @@ const FilterAndSearch = ({ setPageNum, setIdGenre}) => {
                 className='absolute py-2 px-2 top-[100%] left-0 min-h-[80px] min-w-[700px] w-fit group-hover:grid grid-cols-5 gap-2 bg-red-700 hidden'
               >
                 {genreList.map(genre => {
-                  return (<li key={genre.id} onClick={() => handleSortByGenre(genre.id)} 
+                  return (<li key={genre.id} onClick={() => handleSortByOption(genre.id, 'genre')} 
                     className= {`${isActive === genre.id ? 'cursor-not-allowed bg-violet-700 text-yellow-300 hover:bg-violet-700' : ''}hover:text-yellow-300 ml-3 hover:bg-slate-500 py-3 min-w-[100px] px-4 w-fit flex items-center justify-center max-h-[52px]`}
                     >
                     {genre.name}
@@ -63,12 +77,23 @@ const FilterAndSearch = ({ setPageNum, setIdGenre}) => {
                 })}
               </ul>
             </li>
-            <li  className='hover:cursor-pointer transition-all hover:ease-linear duration-300   group inline-block  px-4 text-lg font-bold py-3 hover:bg-slate-400 relative'>
+            {/* <li  className='hover:cursor-pointer transition-all hover:ease-linear duration-300   group inline-block  px-4 text-lg font-bold py-3 hover:bg-slate-400 relative'>
               Country <ChevronDownIcon className='h-5 w-5 inline-block'/>
               
-            </li>
+            </li> */}
             <li   className='hover:cursor-pointer transition-all hover:ease-linear duration-300  group  inline-block  px-4 text-lg font-bold py-3 hover:bg-slate-400 relative'>
               Year <ChevronDownIcon className='h-5 w-5 inline-block'/>
+              <ul 
+                className='absolute py-2 px-2 top-[100%] left-0 min-h-[80px] min-w-[600px] w-fit group-hover:grid grid-cols-5 gap-2 bg-red-700 hidden'
+              >
+                {releaseYear.map((year) => {
+                  return (<li key={year} onClick={() => handleSortByOption(year, 'year')} 
+                    className= {`${isActive === year ? 'cursor-not-allowed bg-violet-700 text-yellow-300 hover:bg-violet-700' : ''}hover:text-yellow-300 ml-3 hover:bg-slate-500 py-3 min-w-[100px] px-4 w-fit flex items-center justify-center max-h-[52px]`}
+                    >
+                    {year}
+                  </li>)
+                })}
+              </ul>
             </li>
           </ul>
           <form onSubmit={handleSubmit} id="search" className='w-[30%] flex items-center justify-center'>

@@ -113,13 +113,16 @@ export const getCastsFromMovie = async (id, dispatch) => {
     }
 }
 
-export const getMovieByGenre = async (id, dispatch, pageNumber) => {
+export const getMovieAfterSort = async (id, dispatch, pageNumber, type) => {
     try {
+        const typeSort = type === 'year' ? {year: id} : {with_genres: id}
+        console.log(typeSort)
         const {data} = await axios.get(`https://api.themoviedb.org/3/discover/movie/`, {
             params: {
                     api_key: process.env.REACT_APP_API_KEY,
-                    with_genres: id,
                     page: pageNumber,
+                    ...typeSort
+                    
 
             }
         })
