@@ -9,6 +9,7 @@ import {getMoviesFromApi, getMovieAfterSort} from './store/apiRequest';
 import MovieListWrapper from './components/MovieListWrapper/MovieListWrapper'
 import Pagination from './components/Pagination/Pagination';
 import Modal from './components/Modal/Modal';
+import SiderBar from './components/SideBar/SiderBar';
 
 const App = () => {
   
@@ -56,11 +57,18 @@ const App = () => {
         </div>
 
         {movieListBannerData.length > 0 ? <BannerSlider /> : null }
-        <FilterAndSearch  setPageNum={setPageNum} setIdGenre= {setIdGenre} setYear= {setYear} setTypeSort={setTypeSort}/>
-        
-        {statusGetApi ? <MovieListWrapper />: null}
-        <div className='mt-[20px] mx-7 max-w-[70%] flex justify-center'>
-          <Pagination pageNum={pageNum} setPageNum={setPageNum}/>
+        <div className='w-full flex '>
+          <div className='max-w-[70%] flex flex-col'>
+            <FilterAndSearch  setPageNum={setPageNum} setIdGenre= {setIdGenre} setYear= {setYear} setTypeSort={setTypeSort}/>
+            
+            {statusGetApi ? <MovieListWrapper />: null}
+            <div className='mt-[20px] mx-7 max-w-[100%] flex justify-center'>
+              <Pagination pageNum={pageNum} setPageNum={setPageNum}/>
+            </div>
+          </div>
+          <div className='w-[30%] mr-7 mt-[25px] h-52 bg-red-700 rounded'>
+            <SiderBar/>
+          </div>
         </div>
         { isOpenModal 
           ? 

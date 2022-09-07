@@ -1,7 +1,7 @@
 import React, {  useState } from 'react'
 import {FilterIcon, ChevronDownIcon, SearchIcon} from '@heroicons/react/solid'
 import { useDispatch, useSelector} from 'react-redux';
-import {setSearchKey} from '../../store/movieSlice'
+import {setSearchKey, sortMovieList} from '../../store/movieSlice'
 import { getMovieAfterSort } from '../../store/apiRequest';
 const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
   const [searchKeyString, setSearchKeyString] = useState('');
@@ -36,7 +36,11 @@ const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
     e.preventDefault()
     setPageNum(1)
     dispatch(setSearchKey(searchKeyString))
+    dispatch(sortMovieList([]))
+    setIsActive(false)
+
   }
+  
   
   const handleSortByOption = async (id, type) => {
     if(type === 'genre') {
@@ -60,7 +64,7 @@ const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
  
   return (
     <div className='pt-6 '>
-        <div id="filter-and-search" className='mx-7 rounded bg-slate-900  max-w-[70%] flex-row flex gap-10 justify-between text-yellow-100'>
+        <div id="filter-and-search" className='mx-7 rounded bg-slate-900  max-w-[100%] flex-row flex gap-10 justify-between text-yellow-100'>
           <span className='ml-4 w-[10%] py-3'><FilterIcon className='w-5 h-5 flex flex-nowrap'/></span>  
           <ul id='filter' className='w-[60%] h-full  pl-7 flex flex-row rounded gap-7 justify-center'>
             <li   className='hover:cursor-pointer group transition-all hover:ease-linear duration-300  inline-block  px-4 text-lg font-bold py-3 hover:bg-slate-400 relative'>
