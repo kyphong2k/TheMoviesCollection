@@ -2,9 +2,10 @@ import React, { useLayoutEffect, useState } from 'react';
 import './App.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ScrollToTop from "react-scroll-to-top"; 
 import BannerSlider from './components/BannerSlider/BannerSlider';
 import FilterAndSearch from './components/FilterAndSearch/FilterAndSearch';
-import {ChevronDoubleUpIcon} from '@heroicons/react/solid'
+import {ChevronUpIcon, FilmIcon} from '@heroicons/react/solid'
 import {useSelector, useDispatch} from 'react-redux'
 import {getMoviesFromApi, getMovieAfterSort} from './store/apiRequest';
 import MovieListWrapper from './components/MovieListWrapper/MovieListWrapper'
@@ -36,7 +37,7 @@ const App = () => {
         getMovieAfterSort(idGenre, dispatch, pageNum, typeSort)
       }
       else if (typeSort === 'year') {
-        getMovieAfterSort(idGenre, dispatch, pageNum, typeSort)
+        getMovieAfterSort(year, dispatch, pageNum, typeSort)
         
       }
     }else{
@@ -44,7 +45,7 @@ const App = () => {
 
     }
    
-  }, [searchKey,pageNum, movieListBannerData,dispatch, idGenre, typeSort])
+  }, [searchKey,pageNum, movieListBannerData,dispatch, idGenre, year, typeSort])
   
  
   
@@ -54,7 +55,10 @@ const App = () => {
       <div id="appWrapper" className="w-full h-fit relative">
 
         <div id="title-app" className="text-center text-3xl text-yellow-100 py-3 bg-slate-900">
-          <h1 onClick={() => {window.location.reload()}} className='text-3xl w-fit mr-auto ml-auto cursor-pointer hover:text-yellow-300'>The Movies Collection</h1>
+          <h1 onClick={() => {window.location.reload()}} 
+            className='text-3xl w-fit mr-auto ml-auto cursor-pointer hover:text-yellow-300 flex items-center'>
+            The Movies Collection <FilmIcon className=' w-[300px] h-[300px]  inline-block hover: text-yellow-300'/>
+          </h1>
         </div>
         {/* banner */}
         {movieListBannerData.length > 0 ? <BannerSlider /> : null }
@@ -75,18 +79,17 @@ const App = () => {
 
         </div>
         {/* button scroll on top */}
-        <div id='btnOnTop' className='h-[45px] w-[45px] bg-red fixed right-5 hover:bg-red-400 bg-red-200 rounded bottom-3'>
-          <button>
-              <ChevronDoubleUpIcon className='w-full h-full text-yellow-300'/>
-          </button>
-        </div>
-        { isOpenModal 
+      
+        <ScrollToTop top={509} width={50} heigth={50} smooth component={<ChevronUpIcon className='text-yellow-100 hover:text-yellow-400 duration-300'/>} style={{background: 'gray'}}  />
+        
+        
+      </div> 
+      { isOpenModal 
           ? 
            <Modal/>
           : 
           null
         }
-      </div> 
     </div>
   );
   }

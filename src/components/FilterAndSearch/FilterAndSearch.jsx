@@ -1,6 +1,6 @@
 import React, {  useState } from 'react'
 import {FilterIcon, ChevronDownIcon, SearchIcon} from '@heroicons/react/solid'
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch} from 'react-redux';
 import {setSearchKey, sortMovieList} from '../../store/movieSlice'
 import { getMovieAfterSort } from '../../store/apiRequest';
 const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
@@ -53,6 +53,7 @@ const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
     }
     else if(type === 'year') {
       await getMovieAfterSort(id, dispatch, 1, type)
+      console.log(id)
       setIsActive(id);
       setPageNum(1)
       setYear(id)

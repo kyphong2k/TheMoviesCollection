@@ -17,3 +17,26 @@ body {
     text-shadow: 2px 2px 10px #cc0000;
 
 }
+
+.carousel.carousel-slider {
+    overflow: inherit;
+    z-index: 10;
+}
+
+.carousel .control-next.control-arrow, .carousel .control-next.control-arrow:hover{
+    background-color: transparent;
+    
+}
+
+.carousel .control-prev.control-arrow, .carousel .control-prev.control-arrow:hover {
+    background-color: transparent;
+    
+}
+
+.carousel .control-arrow, .carousel.carousel-slider .control-arrow{
+    opacity: 1;
+}
+
+
+
+

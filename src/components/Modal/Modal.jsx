@@ -11,7 +11,9 @@ const Modal = () => {
     const {key} = useSelector(state => state.movieData.videoLink)
     const hasMovie = typeof movieSelected === 'object' ? true : false
     const [isOpenMovie, setIsOpenMovie] = useState(false)
+    const movieDate = new Date(movieSelected.release_date)
     const genreLength = movieSelected.genres.length
+    const currentDate = new Date()
     const onPlayerReady = (event) => {
       // access to player in all event handlers via event.target
 
@@ -29,7 +31,7 @@ const Modal = () => {
     }
     
   if(hasMovie){return (
-     <div className='fixed w-[100%] inset-0 h-[100%]  bg-slate-700 z-1000 rounded flex flex-col'>
+     <div className='fixed w-[100%] inset-0 h-[100%]  bg-slate-700 z-50 rounded flex flex-col'>
         <button onClick={closeModal} id='closeModal' className='absolute right-1 z-50 w-[38px] h-[30px] rounded text-[38px] flex items-center justify-center hover:text-yellow-300'>
            x
         </button>
@@ -61,11 +63,18 @@ const Modal = () => {
                     <ul id="tagList" className='flex flex-row flex-wrap items-center list-none'>
                       <h3 className='w-[75px] inline-block opacity-80 text-[16px]'>Tags: </h3>
                       {movieSelected.genres.map((genre,idx) => {
-                        return (<li className='mr-2 ' key={genre.id}> {genre.name} {idx === genreLength -1 ? '.':','}  </li>)
+                        return (<li className='mr-2 ' key={genre.id}> {genre.name} {idx === genreLength - 1 ? '.':','}  </li>)
                       })}
                     </ul>
                     <br></br>
-                    <button onClick = {() => setIsOpenMovie(!isOpenMovie)}  className='px-[12px] h-[42px] bg-red-700 hover:bg-red-600  duration-300  mt-3 text-yellow-200 font-bold rounded w-fit'>Watch Movies</button>
+                    {currentDate > movieDate 
+                      ? 
+                    <button onClick = {() => setIsOpenMovie(!isOpenMovie)}  
+                      className='px-[12px] h-[42px] bg-red-700 hover:bg-red-600  duration-300  mt-3 text-yellow-200 font-bold rounded w-fit'>Watch Movies
+                    </button>
+                      :
+                      null
+                    }
                   </div>
                 </div>
                 
@@ -77,10 +86,10 @@ const Modal = () => {
            <button onClick={() => setIsOpenMovie(!isOpenMovie)} className='w-fit h-[40px] text-yellow-100 font-bold text-[18px] ml-2 py-2 px-2 hover:text-yellow-300 duration-300'>Back</button>
            <h1 className='font-bold text-yellow-100 mb-2 absolute top-5 left-0 right-0 text-center'>{movieSelected.title}</h1>
            <div className='absolute w-[96%]  text-center left-[2%] bottom-0 top-[11%] right-[2%] flex flex-col'>
-              <iframe allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" title='myFrame' 
+              <iframe allowFullScreen="true" webkitAllowFullScreen="true" mozAllowFullScreen="true" title='myFrame' 
                 id="iframe" src={`https://www.2embed.to/embed/tmdb/movie?id=${movieSelected.id}`} width="100%"  
-                className='h-[100%]' frameborder="0">
-            
+                className='h-[100%]' frameBorder="0">
+
               </iframe>
            </div>
          </div>
