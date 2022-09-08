@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {setOpenModal} from '../../store/movieSlice'
 import YouTube from 'react-youtube'
@@ -10,6 +10,7 @@ const Modal = () => {
     const overview = useSelector(state => state.movieData.overview)
     const {key} = useSelector(state => state.movieData.videoLink)
     const hasMovie = typeof movieSelected === 'object' ? true : false
+    const [isOpenMovie, setIsOpenMovie] = useState(false)
     const genreLength = movieSelected.genres.length
     const onPlayerReady = (event) => {
       // access to player in all event handlers via event.target
@@ -24,13 +25,16 @@ const Modal = () => {
 
     const closeModal = () => {
         dispatch(setOpenModal(false))
+        setIsOpenMovie(false)
     }
     
   if(hasMovie){return (
-     <div className='fixed w-[90%] left-[5%] h-[90%] top-[5%] bg-slate-700 z-1000 rounded flex flex-col'>
-        <button onClick={closeModal} id='closeModal' className='absolute right-1 w-[38px] h-[30px] rounded text-[38px] flex items-center justify-center hover:text-yellow-300'>
+     <div className='fixed w-[100%] inset-0 h-[100%]  bg-slate-700 z-1000 rounded flex flex-col'>
+        <button onClick={closeModal} id='closeModal' className='absolute right-1 z-50 w-[38px] h-[30px] rounded text-[38px] flex items-center justify-center hover:text-yellow-300'>
            x
         </button>
+        {!isOpenMovie 
+          ? 
         <div id='modalContent' className='absolute w-[96%] h-[90%] mt-10 flex left-[2%] right-[2%] gap-4'>
             <div id="videoFrame" className='flex-auto w-50 h-full'>
               <YouTube opts={opts} videoId={`${key}`} onReady={onPlayerReady}/>
@@ -38,10 +42,10 @@ const Modal = () => {
                   <CastsInfo/>
               </div>
             </div>
-            <div id="movieDetail" className=' flex-auto w-50 max-w-[50%] overflow-y-auto'>
-                <div id="detailHeader" className='w-full flex flex-row gap-3'>
-                  <div id="posterPath" className='flex-auto w-[30%] h-[250px]  '>
-                    <img className='rounded' alt={`${movieSelected.title} img`} src={`${IMAGE_PATH}${movieSelected.poster_path}` } />
+            <div id="movieDetail" className=' flex-auto w-[50%] max-w-[50%] overflow-y-auto'>
+                <div id="detailHeader" className='w-full flex flex-row gap-3 mb-8'>
+                  <div id="posterPath" className='flex-auto w-[30%] max-h-[250px] object-cover '>
+                    <img className='rounded object-cover' alt={`${movieSelected.title} img`} src={`${IMAGE_PATH}${movieSelected.poster_path}` } />
                   </div>
                   <div id="summary" className=' flex-auto flex flex-col justify-center w-[70%] text-yellow-100'>
                     <h1 id="titleMovie" className='text-yellow-100 text-3xl text-center w-[100%] mb-7'>{movieSelected.title}</h1>
@@ -61,13 +65,26 @@ const Modal = () => {
                       })}
                     </ul>
                     <br></br>
-                    
+                    <button onClick = {() => setIsOpenMovie(!isOpenMovie)}  className='px-[12px] h-[42px] bg-red-700 hover:bg-red-600  duration-300  mt-3 text-yellow-200 font-bold rounded w-fit'>Watch Movies</button>
                   </div>
                 </div>
                 
                 <div id="movieDesc" className='text-yellow-200  h-[100%]'><p className='indent-8 max-w-[100%]'>{overview}{overview}{overview}{overview}</p></div>
             </div>
         </div>
+          :
+         <div className='w-full h-full relative'>
+           <button onClick={() => setIsOpenMovie(!isOpenMovie)} className='w-fit h-[40px] text-yellow-100 font-bold text-[18px] ml-2 py-2 px-2 hover:text-yellow-300 duration-300'>Back</button>
+           <h1 className='font-bold text-yellow-100 mb-2 absolute top-5 left-0 right-0 text-center'>{movieSelected.title}</h1>
+           <div className='absolute w-[96%]  text-center left-[2%] bottom-0 top-[11%] right-[2%] flex flex-col'>
+              <iframe allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" title='myFrame' 
+                id="iframe" src={`https://www.2embed.to/embed/tmdb/movie?id=${movieSelected.id}`} width="100%"  
+                className='h-[100%]' frameborder="0">
+            
+              </iframe>
+           </div>
+         </div>
+        }
     </div>
   )}else{
     <div></div>
