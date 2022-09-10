@@ -30,7 +30,7 @@ const SiderBar = () => {
         getMovies(isActiveSideBar)
     }, [isActiveSideBar])
   return (
-    <div id='sideBarWrapper' className=' rounded overflow-hidden bg-red-700' >
+    <div id='sideBarWrapper' className=' rounded h-full bg-red-700' >
         <div id='headerSideBar' className=" h-[52px] w-full flex text-yellow-100 bg-slate-900 ">
             <button onClick={() => setActiveSideBar('trending')} 
                 className={`${isActiveSideBar === 'trending' ? 'bg-red-700 text-yellow-200 hover:text-yellow-200 ' : 'bg-slate-900 '}outline-none w-[50%] h-full hover:text-yellow-400 hover:cursor-pointer group transition-all
@@ -56,9 +56,9 @@ const SiderBar = () => {
                                 </h5>
                                 {isActiveSideBar === 'trending' 
                                     ? 
-                                <h5 className='text-[12px] text-center'>Hot <FireIcon className='h-3 w-3 inline-block text-yellow-600'/></h5> 
+                                <h5 className='text-[12px] flex items-center text-center'>Hot <FireIcon className='h-3 ml-1 w-3 text-center inline-block text-yellow-600'/></h5> 
                                     : 
-                                <h5 className='text-[12px] text-center flex items-center'><CalendarIcon className='h-3 w-3 text-yellow-200 inline-block'/>{movie.release_date}</h5>}
+                                <h5 className='text-[12px] text-center flex items-center'><CalendarIcon className='h-3 w-3 mr-1 text-yellow-200 inline-block'/> {movie.release_date}</h5>}
                             </div>
                         </li>
                     )

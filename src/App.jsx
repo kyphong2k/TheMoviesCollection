@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -30,7 +30,7 @@ const App = () => {
   const [year, setYear] = useState('')
   const [typeSort , setTypeSort] = useState('')
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if(hadSortMovieList.length > 2) {
       if(typeSort === 'genre') {
 
@@ -45,37 +45,40 @@ const App = () => {
 
     }
    
-  }, [searchKey,pageNum, movieListBannerData,dispatch, idGenre, year, typeSort])
+  }, [searchKey,pageNum, movieListBannerData,dispatch, idGenre, year, typeSort,hadSortMovieList])
   
  
   
 
   return (
-    <div className="App " >
-      <div id="appWrapper" className="w-full h-fit relative">
-
+    <div className={`App phone:overflow-x-hidden phone:overflow-y-hidden`} >
+      <div id="appWrapper" className={`${isOpenModal ? 'overflow-y-hidden ' : ''} overflow-x-hidden overflow-hidden justify-center flex-col flex`}>
+        {/* header */}
         <div id="title-app" className="text-center text-3xl text-yellow-100 py-3 bg-slate-900">
           <h1 onClick={() => {window.location.reload()}} 
             className='text-3xl w-fit mr-auto ml-auto cursor-pointer hover:text-yellow-300 flex items-center'>
-            The Movies Collection <FilmIcon className=' w-[300px] h-[300px]  inline-block hover: text-yellow-300'/>
+            The Movies Collection <FilmIcon className=' max-w-[300px] max-h-[300px]  inline-block hover: text-yellow-300'/>
           </h1>
         </div>
         {/* banner */}
         {movieListBannerData.length > 0 ? <BannerSlider /> : null }
-        <div className='w-full flex body-wrapper'>
-          <div className='max-w-[70%] flex flex-col'>
+        {/* body area */}
+        <div className='w-full h-full flex flex-wrap laptop:flex-nowrap body-wrapper'>
+          <div className='ipad:w-[100%] laptop:w-[70%] phone:w-[100%] flex flex-col'>
             <FilterAndSearch  setPageNum={setPageNum} setIdGenre= {setIdGenre} setYear= {setYear} setTypeSort={setTypeSort}/>
             
             {statusGetApi ? <MovieListWrapper />: null}
-            <div className='mt-[20px] mx-7 max-w-[100%] flex justify-center'>
+            <div className='mt-[20px] mx-7 max-w-[100%] flex flex-wrap justify-center'>
               <Pagination pageNum={pageNum} setPageNum={setPageNum}/>
             </div>
           </div>
-          <div className='w-[30%] mr-7 mt-[25px] h-52 bg-red-700 rounded'>
+        {/* side bar */}
+          <div className='laptop:w-[30%]  phone:w-[100%] phone:mx-2 block laptop:mr-7 mt-[25px] h-fit bg-red-700 rounded'>
             <SiderBar/>
           </div>
         </div>
-        <div id='footer' className='h-[200px] w-full bg-slate-800 mt-14'>
+        {/* footer */}
+        <div id='footer' className='h-[200px] phone:hidden laptop:block w-full bg-slate-800 mt-14'>
 
         </div>
         {/* button scroll on top */}
@@ -89,7 +92,7 @@ const App = () => {
            <Modal/>
           : 
           null
-        }
+      }
     </div>
   );
   }

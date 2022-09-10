@@ -46,9 +46,9 @@ const BannerSlider  = () => {
                               <div className='w-full h-full max-h-full'>
                                 <img className='w-full max-h-full object-cover' style={{height: '500px'}} src={`${POSTER_WIDTH_FULL}${movie.backdrop_path}`} alt="poster" /> 
                               </div>
-                              <div className='banner-text absolute top-0 w-[550px] z-20 gap-8 h-full flex flex-col justify-center items-center '>
-                                <h1 className='title-movie text-zinc-50 bold z-10'>{movie.original_title}</h1>
-                                <p className='overview-movie text-zinc-50 max-w-[500px] z-10'>{movie.overview}</p> 
+                              <div className='banner-text absolute top-0 ipad:max-w-[50%] phone:w-[100%]  z-20 gap-8 h-full flex flex-col justify-center items-center '>
+                                <h1 className='title-movie text-zinc-50 text-center bold z-10'>{movie.original_title}</h1>
+                                <p className='text-[18px] phone:hidden ipad:block overview-movie text-zinc-50 max-w-[500px] z-10'>{movie.overview}</p> 
                                 <ViewDetailButton movieId = {movie.id}/>
                               </div>
 

@@ -9,7 +9,7 @@ const CastsInfo = () => {
   
   return (
 
-      <ul className='flex flex-row w-[90%] h-[90%] overflow-hidden gap-3'>
+      <ul className='flex flex-row phone:justify-center phone:flex-wrap w-[90%] laptop:h-[90%] overflow-hidden gap-3'>
 
       {castsFivePeople.map((cast) => {
         return (

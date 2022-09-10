@@ -64,8 +64,8 @@ const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
   }
  
   return (
-    <div className='pt-6 '>
-        <div id="filter-and-search" className='mx-7 rounded bg-slate-900  max-w-[100%] flex-row flex gap-10 justify-between text-yellow-100'>
+    <div className='pt-6 phone:hidden ipad:hidden laptop:flex phone:justify-end'>
+        <div id="filter-and-search" className='mx-7 phone:hidden laptop:flex rounded bg-slate-900  w-[100%] flex-row gap-10 justify-between text-yellow-100'>
           <span className='ml-4 w-[10%] py-3'><FilterIcon className='w-5 h-5 flex flex-nowrap'/></span>  
           <ul id='filter' className='w-[60%] h-full  pl-7 flex flex-row rounded gap-7 justify-center'>
             <li   className='hover:cursor-pointer group transition-all hover:ease-linear duration-300  inline-block  px-4 text-lg font-bold py-3 hover:bg-slate-400 relative'>
@@ -82,10 +82,7 @@ const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
                 })}
               </ul>
             </li>
-            {/* <li  className='hover:cursor-pointer transition-all hover:ease-linear duration-300   group inline-block  px-4 text-lg font-bold py-3 hover:bg-slate-400 relative'>
-              Country <ChevronDownIcon className='h-5 w-5 inline-block'/>
-              
-            </li> */}
+          
             <li   className='hover:cursor-pointer transition-all hover:ease-linear duration-300  group  inline-block  px-4 text-lg font-bold py-3 hover:bg-slate-400 relative'>
               Year <ChevronDownIcon className='h-5 w-5 inline-block'/>
               <ul 
@@ -109,8 +106,13 @@ const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
                 
               <button type={'submit'} className='ml-1'><SearchIcon className='w-6 h-6 hover:ring-offset-sky-700'/></button>
           </form>
-        </div>
 
+
+        </div>
+        {/* button film will be appear when screen are ipad and phone device */}
+        {/* <button className='laptop:hidden phone:flex  rounded mx-7 border-2 border-solid'>
+                <FilmIcon className='w-[40px] py-1 px-1 h-[40px]'/>
+        </button> */}
     </div>
   )
 }
