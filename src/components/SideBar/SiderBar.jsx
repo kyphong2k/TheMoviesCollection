@@ -49,7 +49,7 @@ const SiderBar = () => {
                             className={`${idx % 2 > 0 ? 'bg-red-500':'bg-red-600'} 
                             flex gap-3 rounded overflow-hidden group hover:cursor-pointer`}
                         >
-                            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={`${movie.title} img`} className='group-hover:opacity-80' width='50px' height='50px'/>
+                            <img src={`http://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={`${movie.title} img`} className='group-hover:opacity-80' width='50px' height='50px'/>
                             <div className='flex flex-col w-full items-center justify-center text-yellow-200'>
                                 <h5 className='text-center group-hover:text-yellow-400'>
                                     {movie.title}

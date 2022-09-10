@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux'
 import ViewDetailButton from '../ViewDetailButton/ViewDetailButton';
 
 const BannerSlider  = () => {
-    const POSTER_WIDTH_FULL = "https://image.tmdb.org/t/p/original/"
+    const POSTER_WIDTH_FULL = "http://image.tmdb.org/t/p/original/"
     const movieList = useSelector(state => state.movieData.movieBannerList)
     const settings = {
         infiniteLoop: false,

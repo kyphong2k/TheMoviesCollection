@@ -24,7 +24,7 @@ var getMoviesByType = function getMoviesByType(type) {
           }
 
           _context.next = 4;
-          return regeneratorRuntime.awrap(_axios["default"].get("https://api.themoviedb.org/3/trending/movie/week", {
+          return regeneratorRuntime.awrap(_axios["default"].get("http://api.themoviedb.org/3/trending/movie/week", {
             params: {
               api_key: process.env.REACT_APP_API_KEY
             }
@@ -47,7 +47,7 @@ var getMoviesByType = function getMoviesByType(type) {
           }
 
           _context.next = 15;
-          return regeneratorRuntime.awrap(_axios["default"].get("https://api.themoviedb.org/3/movie/upcoming", {
+          return regeneratorRuntime.awrap(_axios["default"].get("http://api.themoviedb.org/3/movie/upcoming", {
             params: {
               api_key: process.env.REACT_APP_API_KEY,
               language: 'en-US',

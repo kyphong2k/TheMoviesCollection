@@ -3,7 +3,7 @@ export const getMoviesByType = async (type) => {
     try {
         if(type === 'trending') {
 
-            const {data} = await axios.get(`https://api.themoviedb.org/3/trending/movie/week`, 
+            const {data} = await axios.get(`http://api.themoviedb.org/3/trending/movie/week`, 
                 {
                     params: {
                         api_key : process.env.REACT_APP_API_KEY,
@@ -17,7 +17,7 @@ export const getMoviesByType = async (type) => {
                 return results.slice(0, 10)
         }
         else if(type === 'latest') {
-            const {data} = await axios.get(`https://api.themoviedb.org/3/movie/upcoming`, {
+            const {data} = await axios.get(`http://api.themoviedb.org/3/movie/upcoming`, {
                 params: {
                     api_key: process.env.REACT_APP_API_KEY,
                     language: 'en-US',
