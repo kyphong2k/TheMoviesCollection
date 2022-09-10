@@ -33,7 +33,7 @@ const Modal = () => {
     
   if(hasMovie){return (
      <div className='fixed w-[100%] inset-0 h-[100%] overflow-y-scroll laptop:overflow-hidden bg-slate-700 z-50 flex flex-col   '>
-        <button onClick={closeModal} id='closeModal' className='absolute right-1 z-50 w-[38px] h-[30px] rounded text-[38px] flex items-center justify-center hover:text-yellow-300'>
+        <button onClick={closeModal} id='closeModal' className='absolute right-1 z-50 w-[38px] text-yellow-100 h-[30px] rounded text-[38px] flex items-center justify-center hover:text-yellow-300'>
            x
         </button>
         {!isOpenMovie 
