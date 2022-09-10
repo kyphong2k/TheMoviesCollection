@@ -3,7 +3,7 @@ import { useSelector} from 'react-redux'
 import {setOpenModal} from '../../store/movieSlice'
 import {getCastsFromMovie, getMovieById} from '../../store/apiRequest'
 const MovieCard = ({style, data, dispatch}) => {
-  const IMAGE_PATH ="http://image.tmdb.org/t/p/w500";
+  const IMAGE_PATH ="https://image.tmdb.org/t/p/w500";
   const movieData = data
   const selectedMovie = useSelector(state => state.movieData.selectedMovie)
 

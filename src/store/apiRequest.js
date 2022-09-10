@@ -9,7 +9,7 @@ export const getMoviesFromApi = async ( dispatch, movieListData, searchKey,pageN
     dispatch(getStart()) 
     try {
         
-        const {data} = await axios.get(`http://api.themoviedb.org/3/${type}/movie`, {
+        const {data} = await axios.get(`https://api.themoviedb.org/3/${type}/movie`, {
             params: {
                 api_key: process.env.REACT_APP_API_KEY,
                 query: searchKey,
@@ -46,7 +46,7 @@ export const getMovieById = async (id, dispatch) => {
     
     dispatch(getStart())
     try {
-        const movieData = await axios.get(`http://api.themoviedb.org/3/movie/${id}`,{
+        const movieData = await axios.get(`https://api.themoviedb.org/3/movie/${id}`,{
         params: {
             api_key: process.env.REACT_APP_API_KEY,
             append_to_response: 'videos'
@@ -97,7 +97,7 @@ export const getMovieById = async (id, dispatch) => {
 
 export const getCastsFromMovie = async (id, dispatch) => {
     try {
-        const castsData = await axios.get(`http:api.themoviedb.org/3/movie/${id}/credits`, {
+        const castsData = await axios.get(`https:api.themoviedb.org/3/movie/${id}/credits`, {
                 params: {
                     api_key: process.env.REACT_APP_API_KEY,
                 }
@@ -117,7 +117,7 @@ export const getMovieAfterSort = async (id, dispatch, pageNumber, type) => {
     try {
         const typeSort = type === 'year' ? {year: id} : {with_genres: id}
         console.log(typeSort)
-        const {data} = await axios.get(`http://api.themoviedb.org/3/discover/movie/`, {
+        const {data} = await axios.get(`https://api.themoviedb.org/3/discover/movie/`, {
             params: {
                     api_key: process.env.REACT_APP_API_KEY,
                     page: pageNumber,

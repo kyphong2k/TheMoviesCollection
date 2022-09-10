@@ -4,7 +4,7 @@ import {setOpenModal} from '../../store/movieSlice'
 import YouTube from 'react-youtube'
 import CastsInfo from '../CastsInfo/CastsInfo'
 const Modal = () => {
-    const IMAGE_PATH = 'http://image.tmdb.org/t/p/w500'
+    const IMAGE_PATH = 'https://image.tmdb.org/t/p/w500'
     const dispatch = useDispatch()
     const movieSelected = useSelector(state => state.movieData.selectedMovie)
     const overview = useSelector(state => state.movieData.overview)
@@ -22,7 +22,7 @@ const Modal = () => {
       display: 'grid',
       width: 100 + '%',
       maxHeight: 360,
-      playerVars: { 'autoplay': 0, 'controls': 1,'origin':'http://localhost:8100' },
+      playerVars: { 'autoplay': 0, 'controls': 1,'origin':'https://localhost:8100' },
 
     }
 
@@ -92,7 +92,7 @@ const Modal = () => {
            <h1 className='font-bold text-yellow-100 mb-2 absolute top-5 left-0 right-0 text-center'>{movieSelected.title}</h1>
            <div className='absolute w-[96%]  text-center left-[2%] bottom-0 top-[11%] right-[2%] flex flex-col'>
               <iframe allowFullScreen="true" webkitAllowFullScreen="true" mozAllowFullScreen="true" title='myFrame' 
-                id="iframe" src={`http://www.2embed.to/embed/tmdb/movie?id=${movieSelected.id}`} width="100%"  
+                id="iframe" src={`https://www.2embed.to/embed/tmdb/movie?id=${movieSelected.id}`} width="100%"  
                 className='h-[100%]' frameBorder="0">
 
               </iframe>

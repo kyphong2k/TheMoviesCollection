@@ -28,7 +28,7 @@ var getMoviesFromApi = function getMoviesFromApi(dispatch, movieListData, search
           dispatch((0, _movieSlice.getStart)());
           _context.prev = 2;
           _context.next = 5;
-          return regeneratorRuntime.awrap(_axios["default"].get("http://api.themoviedb.org/3/".concat(type, "/movie"), {
+          return regeneratorRuntime.awrap(_axios["default"].get("https://api.themoviedb.org/3/".concat(type, "/movie"), {
             params: {
               api_key: process.env.REACT_APP_API_KEY,
               query: searchKey,
@@ -83,7 +83,7 @@ var getMovieById = function getMovieById(id, dispatch) {
           dispatch((0, _movieSlice.getStart)());
           _context2.prev = 1;
           _context2.next = 4;
-          return regeneratorRuntime.awrap(_axios["default"].get("http://api.themoviedb.org/3/movie/".concat(id), {
+          return regeneratorRuntime.awrap(_axios["default"].get("https://api.themoviedb.org/3/movie/".concat(id), {
             params: {
               api_key: process.env.REACT_APP_API_KEY,
               append_to_response: 'videos'
@@ -144,7 +144,7 @@ var getCastsFromMovie = function getCastsFromMovie(id, dispatch) {
         case 0:
           _context3.prev = 0;
           _context3.next = 3;
-          return regeneratorRuntime.awrap(_axios["default"].get("http:api.themoviedb.org/3/movie/".concat(id, "/credits"), {
+          return regeneratorRuntime.awrap(_axios["default"].get("https:api.themoviedb.org/3/movie/".concat(id, "/credits"), {
             params: {
               api_key: process.env.REACT_APP_API_KEY
             }
@@ -191,7 +191,7 @@ var getMovieAfterSort = function getMovieAfterSort(id, dispatch, pageNumber, typ
           };
           console.log(typeSort);
           _context4.next = 5;
-          return regeneratorRuntime.awrap(_axios["default"].get("http://api.themoviedb.org/3/discover/movie/", {
+          return regeneratorRuntime.awrap(_axios["default"].get("https://api.themoviedb.org/3/discover/movie/", {
             params: _objectSpread({
               api_key: process.env.REACT_APP_API_KEY,
               page: pageNumber

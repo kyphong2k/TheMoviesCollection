@@ -16,7 +16,7 @@ const CastsInfo = () => {
           <li id='castItem' key={cast.id} className='max-w-[190px] max-h-[100%] overflow-y-hidden'>
             <div className='flex flex-col items-center overflow-hidden'>
               <div className=' mt-3 w-[60px] h-[60px] rounded-[50%] bg-slate-200 overflow-hidden'>
-                <img className='object-center' src={`http://image.tmdb.org/t/p/original/${cast.profile_path}`} alt="" />
+                <img className='object-center' src={`https://image.tmdb.org/t/p/original/${cast.profile_path}`} alt="" />
               </div>
               <h4 id='castName' className='w-full text-center text-yellow-300 text-[13px]'>{cast.name}</h4>
               <h5 id='charName' className='text-yellow-200 opacity-75 text-[12px] text-center truncate'>{cast.character}</h5>
