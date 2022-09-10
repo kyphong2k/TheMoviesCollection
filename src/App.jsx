@@ -30,7 +30,7 @@ const App = () => {
   const [year, setYear] = useState('')
   const [typeSort , setTypeSort] = useState('')
 
-  const getMoviesFromTheMovie = async () => {
+  const getMoviesFromTheMovie = async (searchKey,pageNum, idGenre, year, typeSort,hadSortMovieList,dispatch,movieListBannerData) => {
     if(hadSortMovieList.length > 2) {
       if(typeSort === 'genre') {
 
@@ -59,8 +59,8 @@ const App = () => {
     //   getMoviesFromApi(dispatch, movieListBannerData, searchKey,pageNum)
 
     // }
-      getMoviesFromTheMovie()
-  }, [searchKey,pageNum, idGenre, year, typeSort,hadSortMovieList])
+    getMoviesFromTheMovie(searchKey,pageNum, idGenre, year, typeSort,hadSortMovieList,dispatch,movieListBannerData)
+  }, [searchKey,pageNum, idGenre, year, typeSort,hadSortMovieList,movieListBannerData,dispatch])
   
  
   
