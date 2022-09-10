@@ -30,22 +30,37 @@ const App = () => {
   const [year, setYear] = useState('')
   const [typeSort , setTypeSort] = useState('')
 
-  useEffect(() => {
+  const getMoviesFromTheMovie = async () => {
     if(hadSortMovieList.length > 2) {
       if(typeSort === 'genre') {
 
-        getMovieAfterSort(idGenre, dispatch, pageNum, typeSort)
+        await getMovieAfterSort(idGenre, dispatch, pageNum, typeSort)
       }
       else if (typeSort === 'year') {
-        getMovieAfterSort(year, dispatch, pageNum, typeSort)
+        await getMovieAfterSort(year, dispatch, pageNum, typeSort)
         
       }
     }else{
-      getMoviesFromApi(dispatch, movieListBannerData, searchKey,pageNum)
+      await getMoviesFromApi(dispatch, movieListBannerData, searchKey,pageNum)
 
     }
-   
-  }, [searchKey,pageNum, movieListBannerData,dispatch, idGenre, year, typeSort,hadSortMovieList])
+  }
+  useEffect(() => {
+    // if(hadSortMovieList.length > 2) {
+    //   if(typeSort === 'genre') {
+
+    //     getMovieAfterSort(idGenre, dispatch, pageNum, typeSort)
+    //   }
+    //   else if (typeSort === 'year') {
+    //     getMovieAfterSort(year, dispatch, pageNum, typeSort)
+        
+    //   }
+    // }else{
+    //   getMoviesFromApi(dispatch, movieListBannerData, searchKey,pageNum)
+
+    // }
+      getMoviesFromTheMovie()
+  }, [searchKey,pageNum, idGenre, year, typeSort,hadSortMovieList])
   
  
   
