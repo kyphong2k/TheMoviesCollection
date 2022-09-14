@@ -60,7 +60,7 @@ const App = () => {
 
     // }
     getMoviesFromTheMovie(searchKey,pageNum, idGenre, year, typeSort,hadSortMovieList,dispatch,movieListBannerData)
-  }, [searchKey,pageNum, idGenre, year, typeSort,hadSortMovieList,movieListBannerData,dispatch])
+  }, [searchKey,pageNum, idGenre, year, typeSort])
   
  
   
