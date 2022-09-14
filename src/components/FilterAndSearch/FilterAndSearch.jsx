@@ -38,7 +38,7 @@ const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
     dispatch(setSearchKey(searchKeyString))
     dispatch(sortMovieList([]))
     setIsActive(false)
-    // setSearchKeyString('')
+    setSearchKeyString('')
   }
   
   
