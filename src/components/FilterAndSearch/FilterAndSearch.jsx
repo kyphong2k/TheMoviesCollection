@@ -38,7 +38,7 @@ const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
     dispatch(setSearchKey(searchKeyString))
     dispatch(sortMovieList([]))
     setIsActive(false)
-
+    setSearchKeyString('')
   }
   
   
@@ -101,6 +101,7 @@ const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
           <form onSubmit={handleSubmit} id="search" className='w-[30%] flex items-center justify-center'>
               <input type='text' 
                 placeholder='Enter keywords' 
+                value={searchKeyString}
                 onChange = {(e) => setSearchKeyString(e.target.value)}
                 className='px-3 flex items-center w-[140px] text-stone-800 outline-slate-700 rounded'/>
                 
@@ -109,10 +110,7 @@ const FilterAndSearch = ({ setPageNum, setIdGenre, setYear, setTypeSort}) => {
 
 
         </div>
-        {/* button film will be appear when screen are ipad and phone device */}
-        {/* <button className='laptop:hidden phone:flex  rounded mx-7 border-2 border-solid'>
-                <FilmIcon className='w-[40px] py-1 px-1 h-[40px]'/>
-        </button> */}
+       
     </div>
   )
 }
